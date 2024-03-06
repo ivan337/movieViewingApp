@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.login {
+    width: 370px;
+    height: 370px;
+    flex-shrink: 0;
+
+    margin: 13% 0 auto 20%;
+
+    border-radius: 10px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.4);
+}
+
+.news {
+    width: 570px;
+    height: 370px;
+    flex-shrink: 0;
+
+    margin: 13% auto auto 20px ;
+
+    border-radius: 10px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.4);
+}
+
+.container-rounded-shadow-border {
+    margin: 13% 0 auto 20%;
+
+    border-radius: 10px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.4);
+}

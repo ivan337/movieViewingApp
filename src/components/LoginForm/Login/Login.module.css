@@ -1,0 +1,63 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.login__header {
+    height: 93px;
+    width: 372px;
+}
+.login__header_image {
+    height: 100%;
+    width: 100%;
+    background-image: url();
+    background-color: transparent;
+    background-position: 0;
+    background-repeat: no-repeat;
+}
+
+.login__main__nav {
+    background-color: rgba(94, 93, 93, 0.15);
+    height: 47px;
+    width: 370px;
+}
+
+.inputForm {
+    display: flex;
+    flex-direction: column;
+    margin: 22px 4px 4px 4px;
+}
+
+.login__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 0;
+}
+
+.inputForm_inputText {
+    margin: 4px;
+    width: 250px;
+    height: 36px;
+}
+
+.inputForm__checkbox {
+    display: flex;
+}
+
+.inputForm__checkbox_label {
+
+}
+
+.inputForm__checkbox_input {
+
+}
+
+.inputForm__right-sideButton {
+    display: flex;
+    justify-content: end;
+}

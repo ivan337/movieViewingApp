@@ -1,0 +1,15 @@
+.button {
+    width: 76px;
+    height: 36px;
+    padding: 0;
+    margin: 4px;
+    color: teal;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid teal;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgb(0, 128, 128, 0.13);
+}
