@@ -10,16 +10,21 @@
     height: 93px;
     width: 372px;
 }
-.login__header_image {
+.login_headerImage {
+    content: '';
     height: 100%;
     width: 100%;
-    background-image: url();
+
+    background-image: url('login.jpg');
     background-color: transparent;
-    background-position: 0;
+    background-position: center;
     background-repeat: no-repeat;
+
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
 }
 
-.login__main__nav {
+.navigator {
     background-color: rgba(94, 93, 93, 0.15);
     height: 47px;
     width: 370px;
@@ -40,24 +45,28 @@
 }
 
 .inputForm_inputText {
+    padding-left: 8px;
+    padding-right: 8px;
     margin: 4px;
-    width: 250px;
+    width: 240px;
     height: 36px;
+
+    border-radius: 16px;
 }
 
 .inputForm__checkbox {
     display: flex;
 }
 
-.inputForm__checkbox_label {
+.inputForm__checkbox_checkboxLabel {
 
 }
 
-.inputForm__checkbox_input {
+.inputForm__checkbox_checkboxInput {
 
 }
 
-.inputForm__right-sideButton {
+.inputForm__rightSideButton {
     display: flex;
     justify-content: end;
 }
