@@ -9,7 +9,7 @@ export type Ref = HTMLButtonElement;
 
 export const PepaButton = forwardRef<Ref, Props> ((props, ref) => {
     return (
-        <button className={classes.button} ref={ref} {...props}>
+        <button className={`${classes.button} ${props.className}`} ref={ref} {...props}>
             {props.children}
         </button>
     )

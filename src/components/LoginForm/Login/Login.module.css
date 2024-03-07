@@ -6,6 +6,14 @@
     padding: 0;
 }
 
+.login__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 0;
+}
+
 .login__header {
     height: 93px;
     width: 372px;
@@ -15,17 +23,12 @@
     height: 100%;
     width: 100%;
 
-    background-image: url('login.jpg');
-    background-color: transparent;
-    background-position: center;
-    background-repeat: no-repeat;
-
     -webkit-border-top-left-radius: 10px;
     -webkit-border-top-right-radius: 10px;
 }
 
 .navigator {
-    background-color: rgba(94, 93, 93, 0.15);
+    background-color: rgba(106, 55, 134, .30);
     height: 47px;
     width: 370px;
 }
@@ -36,26 +39,35 @@
     margin: 22px 4px 4px 4px;
 }
 
-.login__main {
+.inputBox {
+    width: 240px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    flex: 1;
-    margin: 0;
 }
 
-.inputForm_inputText {
+.inputBox_inputText {
+    flex: 1;
     padding-left: 8px;
-    padding-right: 8px;
+    padding-right: 30px;
     margin: 4px;
-    width: 240px;
     height: 36px;
 
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .30);
     border-radius: 16px;
+}
+
+.inputBox_icon {
+    position: absolute;
+    transform: translateX(94px);
+    font-size: 14px;
+    color: black;
 }
 
 .inputForm__checkbox {
     display: flex;
+    margin: 4px 0 0 0;
 }
 
 .inputForm__checkbox_checkboxLabel {
@@ -63,10 +75,27 @@
 }
 
 .inputForm__checkbox_checkboxInput {
-
+    cursor: pointer;
 }
 
-.inputForm__rightSideButton {
+.inputForm__loginButtonR {
     display: flex;
     justify-content: end;
+}
+
+.inputForm__loginButton {
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    margin: 12px 0 0 0;
+    height: 36px;
+    border: 2px solid rgba(255, 255, 255, .30);
+    border-radius: 16px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.inputForm__loginButton:hover {
+    border: 2px solid rgba(255, 255, 255, .60);
 }

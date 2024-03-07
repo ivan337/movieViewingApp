@@ -5,7 +5,7 @@ import {LoginForm} from "./components/LoginForm/LoginForm";
 function App() {
   return (
     <div className="App">
-        <LoginForm />
+        <LoginForm className={'login_form-background'}/>
     </div>
   );
 }
