@@ -13,7 +13,7 @@ export const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
     };
 
     return (
-        <div className={classes.login} {...props}>
+        <div className={`${classes.login} ${props.className}`}>
             <div className={classes.login__header}>
                 <div className={classes.login_headerImage}/>
             </div>

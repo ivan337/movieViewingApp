@@ -15,7 +15,7 @@ export const News = (props: InputHTMLAttributes<HTMLDivElement>) => {
     )
 
     return (
-        <div className={classes.news} {...props} >
+        <div className={`${classes.news} ${props.className}`} >
             <ul>{listItems}</ul>
         </div>
     )

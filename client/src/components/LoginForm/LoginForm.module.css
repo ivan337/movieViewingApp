@@ -1,16 +1,14 @@
 .container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
     height: 100vh;
-    min-height: 450px;
 }
 
 .login {
-    max-height: 700px;
-    width: 370px;
-    flex-shrink: 0;
-
-    margin: 4%;
+    margin: 40px 20px 40px 40px;
 
     border-radius: 10px;
 
@@ -21,11 +19,7 @@
 }
 
 .news {
-    flex: 1;
-    flex-shrink: 0;
-
-    max-height: 700px;
-    margin: 4% 0 4% 4%;
+    margin: 40px 40px 40px 20px;
 
     border-radius: 10px;
 
@@ -33,11 +27,4 @@
 
     backdrop-filter: blur(14px);
     box-shadow: 0 1px 4px 0 rgba(255,255,255,.4);
-}
-
-.container-rounded-shadow-border {
-    margin: 13% 0 auto 20%;
-
-    border-radius: 10px;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.4);
 }

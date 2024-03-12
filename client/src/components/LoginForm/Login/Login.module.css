@@ -1,9 +1,9 @@
 .login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+    height: 400px;
+    width: 370px;
+
+    min-height: 400px;
+    min-width: 370px;
 }
 
 .login__main {
@@ -11,7 +11,6 @@
     flex-direction: column;
     align-items: center;
     flex: 1;
-    margin: 0;
 }
 
 .login__header {
