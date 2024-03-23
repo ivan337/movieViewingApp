@@ -1,11 +1,12 @@
 import type express from 'express';
+import ApiError from "../exception/api-error";
 
 class UserController {
     async login(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
-            res.json([1,2,3]);
+            return res.json([1,2,3]);
         } catch (e) {
-            
+            next(e);
         }
     }
 }
