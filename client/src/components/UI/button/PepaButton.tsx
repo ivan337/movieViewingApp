@@ -1,11 +1,11 @@
-import classes from './PepaButton.module.css'
-import {ButtonHTMLAttributes, forwardRef} from "react";
+import classes from './PepaButton.module.scss'
+import {ButtonHTMLAttributes, forwardRef} from "react"
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 }
 
-export type Ref = HTMLButtonElement;
+export type Ref = HTMLButtonElement
 
 export const PepaButton = forwardRef<Ref, Props> ((props, ref) => {
     return (

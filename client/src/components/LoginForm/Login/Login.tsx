@@ -1,16 +1,16 @@
-import {PepaInput} from "../../UI/input/PepaInput";
-import classes from './Login.module.css'
-import {PepaButton} from "../../UI/button/PepaButton";
-import {InputHTMLAttributes, useRef} from "react";
-import {FaLock, FaUser} from "react-icons/fa";
+import {PepaInput} from "../../UI/input/PepaInput"
+import classes from './Login.module.scss'
+import {PepaButton} from "../../UI/button/PepaButton"
+import {InputHTMLAttributes, useRef} from "react"
+import {FaLock, FaUser} from "react-icons/fa"
 
 export const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
-    let login = useRef<HTMLInputElement>(null);
-    let password = useRef<HTMLInputElement>(null);
+    let login = useRef<HTMLInputElement>(null)
+    let password = useRef<HTMLInputElement>(null)
 
     const doLogin = function() {
-        return;
-    };
+        return
+    }
 
     return (
         <div className={`${classes.login} ${props.className}`}>
@@ -42,5 +42,5 @@ export const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
                 </div>
             </div>
         </div>
-    );
+    )
 }

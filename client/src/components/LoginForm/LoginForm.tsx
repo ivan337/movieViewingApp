@@ -1,7 +1,7 @@
-import classes from "./LoginForm.module.css";
-import {News} from "./News/News";
-import {Login} from "./Login/Login";
-import {HTMLAttributes} from "react";
+import classes from "./LoginForm.module.scss"
+import {News} from "./News/News"
+import {Login} from "./Login/Login"
+import {HTMLAttributes} from "react"
 
 export const LoginForm = (props: HTMLAttributes<HTMLDivElement>) => {
     return (
