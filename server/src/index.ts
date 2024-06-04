@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser'
 import router from './router/index'
 import 'dotenv/config';
 import errorMiddleware from "./middleware/error-middleware";
+import {DataTypes, Sequelize} from "sequelize";
+import sqliteConnection from "./dbService/sqlite-connection";
 
 const app = express();
 
@@ -17,6 +19,10 @@ app.use('/api', router);
 
 app.use(errorMiddleware);
 
+sqliteConnection.sync({force: true}).then(() => {
+    console.log('sqlite db is ready')
+});
+
 const start = async() => {
     try {
         app.get('/', (req:Request, res:Response) => {
@@ -24,6 +30,7 @@ const start = async() => {
 
             res.end();
         });
+
         app.listen(PORT, () => {
             console.log(`Server starter on PORT = ${PORT}`);
         });

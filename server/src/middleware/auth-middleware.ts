@@ -1,6 +1,10 @@
 import ApiError from "../exception/api-error";
-import {NextFunction} from "express";
+import { Request, Response, NextFunction } from 'express';
 
-export default function(err: Error, req: Request, resp: Response, next: NextFunction) {
-    next();
+export default function(req: Request, res: Response, next: NextFunction) {
+    try {
+        return next();
+    } catch (e) {
+        return next(ApiError.unauthorizedError());
+    }
 }
