@@ -15,7 +15,7 @@ class UserService {
         });
 
         if (!user) {
-            throw ApiError.badRequest('Пользователь с таким email не найден');
+            throw ApiError.unauthorizedError();
         }
 
         const passwordEq = await bcrypt.compare(password, user.password)

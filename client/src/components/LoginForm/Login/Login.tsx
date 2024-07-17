@@ -14,7 +14,7 @@ export const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
         e.preventDefault();
         axios
             .post('http://localhost:5000/api/login', {
-                login: login.current.value,
+                email: login.current.value,
                 password: password.current.value
             })
             .then(w => console.warn(w))
