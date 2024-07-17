@@ -1,7 +1,5 @@
-import {InputHTMLAttributes} from "react";
+import { InputHTMLAttributes } from 'react';
 
-const Registration = (props: InputHTMLAttributes<HTMLDivElement>) => {
-
-};
+const Registration = (props: InputHTMLAttributes<HTMLDivElement>) => {};
 
 export default Registration;

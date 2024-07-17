@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:5000/",
+  "type": "module",
   "scripts": {
     "build": "webpack serve --env mode=development",
     "build:dev": "webpack --env mode=development",
-    "build:prod": "webpack --env mode=production"
+    "build:prod": "webpack --env mode=production",
+    "lint:dev": "eslint .",
+    "format:dev": "eslint . --fix"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.2",
@@ -15,13 +18,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-    "react-redux": "9.1.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "react-redux": "9.1.2"
   },
   "browserslist": {
     "production": [
@@ -42,9 +39,18 @@
     "@types/react-dom": "18.2.19",
     "@types/webpack": "^5.28.5",
     "@types/webpack-dev-server": "^4.7.2",
+    "@typescript-eslint/eslint-plugin": "7.16.1",
+    "@typescript-eslint/parser": "7.16.1",
     "css-loader": "^6.10.0",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-react": "7.34.4",
+    "eslint-plugin-react-hooks": "4.6.2",
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.8.1",
+    "prettier": "3.3.3",
     "sass": "^1.72.0",
     "sass-loader": "^14.1.1",
     "style-loader": "^3.3.4",

@@ -1,16 +1,19 @@
-import classes from './PepaButton.module.scss'
-import {ButtonHTMLAttributes, forwardRef} from "react"
+import { ButtonHTMLAttributes, forwardRef } from 'react';
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+import classes from './PepaButton.module.scss';
 
-}
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
-export type Ref = HTMLButtonElement
+export type Ref = HTMLButtonElement;
 
-export const PepaButton = forwardRef<Ref, Props> ((props, ref) => {
-    return (
-        <button className={`${classes.button} ${props.className}`} ref={ref} {...props}>
-            {props.children}
-        </button>
-    )
-})
+export const PepaButton = forwardRef<Ref, Props>((props, ref) => {
+  return (
+    <button
+      className={`${classes.button} ${props.className}`}
+      ref={ref}
+      {...props}
+    >
+      {props.children}
+    </button>
+  );
+});
