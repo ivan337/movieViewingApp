@@ -9,12 +9,12 @@ import {
 import axios from 'axios';
 import { FaLock, FaUser } from 'react-icons/fa';
 
-import { PepaButton } from '../../UI/button/PepaButton';
-import { PepaInput } from '../../UI/input/PepaInput';
-
 import classes from './Login.module.scss';
 
-export const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
+import PepaButton from '@/components/UI/button/PepaButton';
+import PepaInput from '@/components/UI/input/PepaInput';
+
+const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
   let login = useRef<HTMLInputElement>(null);
   let password = useRef<HTMLInputElement>(null);
   let [error, setError] = useState('');
@@ -90,3 +90,5 @@ export const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
     </>
   );
 };
+
+export default Login;

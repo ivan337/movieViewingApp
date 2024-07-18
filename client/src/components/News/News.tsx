@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from 'react';
 
 import classes from './News.module.scss';
 
-export const News = (props: InputHTMLAttributes<HTMLDivElement>) => {
+const News = (props: InputHTMLAttributes<HTMLDivElement>) => {
   const news = [
     { id: 0, text: '125125', date: '29.02.2024' },
     { id: 1, text: 'awd', date: '29.02.2024' },
@@ -21,3 +21,5 @@ export const News = (props: InputHTMLAttributes<HTMLDivElement>) => {
     </div>
   );
 };
+
+export default News;

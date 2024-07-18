@@ -1,5 +1,5 @@
 import './App.scss';
-import { LoginForm } from './components/LoginForm/LoginForm';
+import { LoginForm } from '@/pages';
 
 function App() {
   return (

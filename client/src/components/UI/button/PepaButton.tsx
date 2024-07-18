@@ -6,7 +6,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export type Ref = HTMLButtonElement;
 
-export const PepaButton = forwardRef<Ref, Props>((props, ref) => {
+const PepaButton = forwardRef<Ref, Props>((props, ref) => {
   return (
     <button
       className={`${classes.button} ${props.className}`}
@@ -17,3 +17,5 @@ export const PepaButton = forwardRef<Ref, Props>((props, ref) => {
     </button>
   );
 });
+
+export default PepaButton;
