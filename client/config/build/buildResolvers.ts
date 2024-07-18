@@ -9,10 +9,8 @@ export function buildResolvers(
 ): Configuration['resolve'] {
   return {
     extensions: ['.tsx', '.ts', '.js'],
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src/'),
-      },
+    alias: {
+      '@': options.paths.src,
     },
   };
 }
