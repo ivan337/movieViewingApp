@@ -7,8 +7,8 @@
     "build": "webpack serve --env mode=development",
     "build:dev": "webpack --env mode=development",
     "build:prod": "webpack --env mode=production",
-    "lint:dev": "eslint .",
-    "format:dev": "eslint . --fix"
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
+    "format": "eslint --fix --ext .js,.jsx,.ts,.tsx src/"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.2",

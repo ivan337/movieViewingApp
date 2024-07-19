@@ -1,8 +1,8 @@
 import { HomePage } from '@/pages';
 
 const HomeRoute = {
-  path: '/',
-  element: <HomePage />,
+    path: '/',
+    element: <HomePage />,
 };
 
 export default HomeRoute;
