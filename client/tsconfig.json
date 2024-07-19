@@ -3,6 +3,7 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"],
+      "@assets/*": ["./src/assets/*"],
     },
 
     "outDir": "./dist/",
