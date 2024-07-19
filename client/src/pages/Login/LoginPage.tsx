@@ -1,11 +1,11 @@
 import { HTMLAttributes } from 'react';
 
-import classes from './LoginForm.module.scss';
+import classes from './LoginPage.module.scss';
 
 import Login from '@/components/Login';
 import News from '@/components/News';
 
-const LoginForm = (props: HTMLAttributes<HTMLDivElement>) => {
+const LoginPage = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div className={`${classes.container} ${props.className}`}>
       <Login className={classes.login} />
@@ -14,4 +14,4 @@ const LoginForm = (props: HTMLAttributes<HTMLDivElement>) => {
   );
 };
 
-export default LoginForm;
+export default LoginPage;

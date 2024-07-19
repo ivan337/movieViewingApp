@@ -1,10 +1,12 @@
 import './App.scss';
-import { LoginForm } from '@/pages';
+import { RouterProvider } from 'react-router-dom';
+
+import coreRouter from '@/routes';
 
 function App() {
   return (
     <div className="App">
-      <LoginForm className={'login_form-background'} />
+      <RouterProvider router={coreRouter} />
     </div>
   );
 }
