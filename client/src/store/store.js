@@ -1,9 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
-import loginSlice from '../features/login/loginSlice';
+import authReducer from '@/features/auth/authSlice';
+import { authApi } from '@/services/auth';
 
-export default configureStore({
+const store = configureStore({
   reducer: {
-    login: loginSlice,
+    [authApi.reducerPath]: authApi.reducer,
+    auth: authReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authApi.middleware),
 });
+
+//setupListeners(store.dispatch);
+export default store;

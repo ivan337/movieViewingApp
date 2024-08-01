@@ -5,7 +5,7 @@ const errorMiddleware = function(err: Error, req: Request, res: Response, next: 
     console.log(err);
 
     if (err instanceof ApiError) {
-        return res.status(Number(err.status)).json({message: err.message});
+        return res.status(err.status).json({message: err.message});
     }
 
     return res.status(500).json({message: 'Непредвиненная ошибка'})

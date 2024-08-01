@@ -1,30 +1,40 @@
-import { InputHTMLAttributes, useCallback, useRef, useState } from 'react';
+import { InputHTMLAttributes, useCallback, useRef } from 'react';
 
-import axios from 'axios';
 import { FaLock, FaUser } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 
 import classes from './Login.module.scss';
 
 import PepaButton from '@/components/UI/button/PepaButton';
 import PepaInput from '@/components/UI/input/PepaInput';
+import { selectAuthError, setError, setToken } from '@/features/auth/authSlice';
+import { useLoginMutation } from '@/services/auth';
 
 const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
+  const dispatch = useDispatch();
   const login = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState('');
+  const error = useSelector(selectAuthError);
+  const [loginMutation] = useLoginMutation();
 
   const onFormSubmit = useCallback(
-    function (e: React.FormEvent<HTMLFormElement>) {
+    async function (e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault();
-      axios
-        .post('http://localhost:5000/api/login', {
+
+      try {
+        const result = await loginMutation({
           email: login.current.value,
           password: password.current.value,
-        })
-        .then((w) => console.warn(w))
-        .catch(({ response }) => {
-          setError(response.data.message);
-        });
+        }).unwrap();
+
+        dispatch(setToken(result.token));
+      } catch (e) {
+        if ('data' in e) {
+          dispatch(setError(e.data.message));
+        } else {
+          dispatch(setError(e.error));
+        }
+      }
     },
     [login, password],
   );
