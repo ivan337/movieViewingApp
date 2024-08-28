@@ -24,7 +24,14 @@ class UserService {
             throw ApiError.badRequest('Неверный пароль')
         }
 
-        return {};
+        const userDto = new UserDto(user);
+
+        const tokens = tokenService.generateToken(JSON.parse(JSON.stringify(userDto)));
+
+        return {
+            ...tokens,
+            userDto
+        };
     }
     async registration(email: string, password: string) {
         const user = await UserModel.findOne({

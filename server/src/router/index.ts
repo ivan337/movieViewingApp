@@ -1,11 +1,10 @@
-import authMiddleware from "../middleware/auth-middleware";
+import Router from 'express';
+import userRouter from './userRouter';
+import movieRouter from './movieRouter';
 
-import userController from "../controller/user-controller";
+const router = Router();
 
-const Router = require('express').Router;
-const router = new Router();
-
-router.post('/login', authMiddleware, userController.login);
-router.post('/registartion', userController.registartion);
+router.use('/user', userRouter);
+router.use('/movie', movieRouter);
 
 export default router;

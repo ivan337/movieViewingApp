@@ -1,26 +1,39 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-interface LoginResponse {
-  token: string;
+interface ILoginResponse {
+  accessToken: string;
+  refreshToken: string;
 }
 
-interface LoginRequest {
+interface ILoginRequest {
   email: string;
   password: string;
 }
 
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'http://localhost:5000/api/user',
+  prepareHeaders: (headers) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken) {
+      headers.set('Authorization', `Bearer ${accessToken}`);
+    }
+
+    return headers;
+  },
+});
+
 export const authApi = createApi({
-  reducerPath: 'authApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api' }),
+  baseQuery,
   endpoints: (builder) => ({
-    login: builder.mutation<LoginResponse, LoginRequest>({
+    login: builder.mutation<ILoginResponse, ILoginRequest>({
       query: (credentials) => ({
         url: 'login',
         method: 'POST',
         body: credentials,
       }),
     }),
-    registration: builder.mutation<LoginResponse, LoginRequest>({
+    registration: builder.mutation<ILoginResponse, ILoginRequest>({
       query: (credentials) => ({
         url: 'registartion',
         method: 'POST',
@@ -36,5 +49,4 @@ export const authApi = createApi({
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegistrationMutation } =
-  authApi;
+export const { useLoginMutation, useLogoutMutation } = authApi;
