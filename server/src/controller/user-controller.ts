@@ -32,6 +32,31 @@ class UserController {
             next(e);
         }
     }
+
+    async logout(req: express.Request, res: express.Response, next: express.NextFunction) {
+        try {
+            const { accessToken } = req.cookies;
+
+            await userService.logout(accessToken);
+
+            res.clearCookie('accessToken');
+            res.sendStatus(200);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async refresh(req: express.Request, res: express.Response, next: express.NextFunction) {
+        try {
+            const { refreshToken } = req.cookies;
+
+            const userData = await userService.refresh(refreshToken);
+
+            res.json(userData);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export default new UserController();

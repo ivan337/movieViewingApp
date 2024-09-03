@@ -13,7 +13,7 @@ interface ILoginRequest {
 const baseQuery = fetchBaseQuery({
   baseUrl: 'http://localhost:5000/api/user',
   prepareHeaders: (headers) => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = sessionStorage.getItem('accessToken');
 
     if (accessToken) {
       headers.set('Authorization', `Bearer ${accessToken}`);
@@ -31,6 +31,7 @@ export const authApi = createApi({
         url: 'login',
         method: 'POST',
         body: credentials,
+        credentials: 'include',
       }),
     }),
     registration: builder.mutation<ILoginResponse, ILoginRequest>({

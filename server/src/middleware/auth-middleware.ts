@@ -1,12 +1,12 @@
 import ApiError from '../exception/api-error';
 import { NextFunction, Request, Response } from 'express';
-import tokenService from '../service/token-service';
+import tokenService, {CustomJwtPayload} from '../service/token-service';
 import { JwtPayload } from 'jsonwebtoken';
 
 declare global {
     namespace Express {
         interface Request {
-            user?: JwtPayload;
+            user?: CustomJwtPayload;
         }
     }
 }
@@ -26,7 +26,7 @@ export default function(req: Request, res: Response, next: NextFunction) {
         }
 
         //TODO: req.user ???
-        req.user = tokenService.validateAccessToken(token) as JwtPayload;
+        req.user = tokenService.validateAccessToken(token) as CustomJwtPayload;
 
         return next();
     } catch (e) {
