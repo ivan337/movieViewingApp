@@ -1,6 +1,7 @@
 import type express from 'express';
 import ApiError from "../exception/api-error";
 import userService from "../service/user-service";
+import UserDto from "../dtos/user-dto";
 
 class UserController {
     async login(req: express.Request, res: express.Response, next: express.NextFunction) {
@@ -41,6 +42,16 @@ class UserController {
 
             res.clearCookie('accessToken');
             res.sendStatus(200);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async loadProfile(req: express.Request, res: express.Response, next: express.NextFunction) {
+        try {
+            const testUser = new UserDto({email: 'test', id: 1, isActivated: true});
+
+            return res.json(testUser);
         } catch (e) {
             next(e);
         }

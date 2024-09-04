@@ -77,13 +77,22 @@ class TokenService {
         }
     }
 
-    async findToken(token: string): Promise<TokenModel | null> {
+    async findRefreshToken(refreshToken: string): Promise<TokenModel | null> {
         return await TokenModel.findOne({
             where: {
-                refreshToken: token
+                refreshToken
             }
         });
     }
+/*
+    async findAccessToken(accessToken: string): Promise<TokenModel | null> {
+        return await TokenModel.findOne({
+            where: {
+                accessToken
+            }
+        });
+    }
+ */
 }
 
 export default new TokenService();

@@ -16,6 +16,7 @@ export function buildServer({
           cert: paths.certificateCert,
         },
          */
+        historyApiFallback: true,
         port: port,
         open: true,
         static: './dist',

@@ -79,7 +79,7 @@ class UserService {
         }
 
         const userData = await tokenService.validateRefreshToken(refreshToken) as CustomJwtPayload;
-        const tokenFromDb = await tokenService.findToken(refreshToken) as TokenModel;
+        const tokenFromDb = await tokenService.findRefreshToken(refreshToken) as TokenModel;
 
         if (!userData || !tokenFromDb) {
             throw ApiError.unauthorizedError();
