@@ -9,10 +9,17 @@ export function buildServer({
   const isDev = mode === 'development';
 
   return isDev
-    ? {
+    ? ({
+        /*
+        https: {
+          key: paths.certificateKey,
+          cert: paths.certificateCert,
+        },
+         */
+        historyApiFallback: true,
         port: port,
         open: true,
         static: './dist',
-      }
+      } as DevServerConfiguration)
     : undefined;
 }

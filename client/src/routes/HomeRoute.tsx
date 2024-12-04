@@ -1,7 +1,7 @@
 import { HomePage } from '@/pages';
 
 const HomeRoute = {
-  path: '/',
+  path: '/home',
   element: <HomePage />,
 };
 

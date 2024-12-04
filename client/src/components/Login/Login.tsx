@@ -9,6 +9,7 @@ import PepaButton from '@/components/UI/button/PepaButton';
 import PepaInput from '@/components/UI/input/PepaInput';
 import { selectAuthError, setError, setToken } from '@/features/auth/authSlice';
 import { useLoginMutation } from '@/services/auth';
+import { appendCookie } from '@/utils/cookie';
 
 const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
   const [email, setEmail] = useState('');
@@ -29,15 +30,14 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
           dispatch(
             setToken({
               accessToken: resp.accessToken,
-              refreshToken: resp.refreshToken,
               isAuthenticated: true,
               error: '',
             }),
           );
 
-          document.cookie = `refreshToken=${resp.refreshToken}; Secure; HttpOnly; SameSite=Strict`;
+          appendCookie('refreshToken', resp.refreshToken, 14, false);
 
-          localStorage.setItem('accessToken', resp.accessToken);
+          sessionStorage.setItem('accessToken', resp.accessToken);
         }
       } catch (e) {
         if ('data' in e.response) {

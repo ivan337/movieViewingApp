@@ -1,36 +1,56 @@
-import {DataTypes, Model, Sequelize, InferAttributes, InferCreationAttributes} from "sequelize";
-import sqliteConnection from "../dbService/sqlite-connection";
+import { DataTypes, Model, Optional } from 'sequelize';
+import sqliteConnection from '../dbService/sqlite-connection';
 
-class UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
-    declare email: string;
-    declare password: string;
-    declare isActivated: boolean;
-    declare activationLink: string;
+interface UserAttributes {
+    id: number;
+    email: string;
+    password: string;
+    isActivated: boolean;
+    activationLink: string;
+}
 
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+
+class UserModel extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+    public id!: number;
+    public email!: string;
+    public password!: string;
+    public isActivated!: boolean;
+    public activationLink!: string;
+
+    // timestamps!
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
 }
 
 UserModel.init(
     {
+        id: {
+            type: DataTypes.INTEGER.UNSIGNED,
+            autoIncrement: true,
+            primaryKey: true,
+        },
         email: {
             type: DataTypes.STRING,
             unique: true,
-            allowNull: false
+            allowNull: false,
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         isActivated: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
         },
         activationLink: {
-            type: DataTypes.STRING
-        }
+            type: DataTypes.STRING,
+        },
     },
     {
         sequelize: sqliteConnection,
-        tableName: 'users'
+        tableName: 'users',
+        timestamps: true,
     }
 );
 

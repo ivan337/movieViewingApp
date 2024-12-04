@@ -1,5 +1,17 @@
-import jwt from 'jsonwebtoken';
-import {TokenModel} from "../models/token-model";
+import jwt, {JwtPayload} from 'jsonwebtoken';
+import TokenModel from "../models/token-model";
+
+interface UserData {
+    email: string;
+    id: number;
+    isActivated: boolean;
+}
+
+export interface CustomJwtPayload extends JwtPayload, UserData {
+    email: string;
+    id: number;
+    isActivated: boolean;
+}
 
 class TokenService {
     generateToken(payload: object) {
@@ -22,7 +34,7 @@ class TokenService {
         return { accessToken, refreshToken }
     }
 
-    async saveToken(userId: number, refreshToken: string) {
+    async saveToken(userId: number, refreshToken: string): Promise<TokenModel> {
         const tokenData = await TokenModel.findOne({
             where: {
                 user: userId
@@ -41,29 +53,46 @@ class TokenService {
         return await tokenData.save();
     }
 
-    async refreshToken(userId: number, token: string) {
-        return token;
+    async removeToken(refreshToken: string) {
+        await TokenModel.destroy({
+            where: {
+                refreshToken
+            }
+        });
     }
 
-    async deleteToken(userId: number, token: string) {
-        return token;
-    }
-
-    validateAccessToken(token: string) {
+    validateAccessToken(token: string): CustomJwtPayload | null {
         try {
-            return jwt.verify(token, process.env.JWT_ACCESS_SECRET || 'access_secret')
+            return jwt.verify(token, process.env.JWT_ACCESS_SECRET || 'access_secret') as CustomJwtPayload;
         } catch (e) {
             return null;
         }
     }
 
-    validateRefreshToken(token: string) {
+    validateRefreshToken(token: string): CustomJwtPayload | null {
         try {
-            return jwt.verify(token, process.env.JWT_ACCESS_REFRESH || 'access_refresh')
+            return jwt.verify(token, process.env.JWT_ACCESS_REFRESH || 'access_refresh') as CustomJwtPayload;
         } catch (e) {
             return null;
         }
     }
+
+    async findRefreshToken(refreshToken: string): Promise<TokenModel | null> {
+        return await TokenModel.findOne({
+            where: {
+                refreshToken
+            }
+        });
+    }
+/*
+    async findAccessToken(accessToken: string): Promise<TokenModel | null> {
+        return await TokenModel.findOne({
+            where: {
+                accessToken
+            }
+        });
+    }
+ */
 }
 
 export default new TokenService();

@@ -6,6 +6,7 @@ const baseUrl = 'http://localhost:5000/api/user';
 interface ILoginResponse {
   accessToken: string;
   refreshToken: string;
+  isActivated: string;
 }
 
 interface ILoginRequest {
