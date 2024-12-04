@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1bbe5d6c-c9ef-4a3a-828d-0b40e1a59666" name="Changes" comment="bug 0">
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/store/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/store/store.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="TypeScript JSX File" />
+        <option value="SCSS File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2jN6bUMTvUKGNLWSmrJZW774HSE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;js.linters.configure.manually.selectedtslint&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/chernov-iv/Documents/GitHub Projects/my-app&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;SCSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.build:client.executor&quot;: &quot;Debug&quot;,
+    &quot;npm.build:dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build:prod.executor&quot;: &quot;Run&quot;,
+    &quot;npm.build:server.executor&quot;: &quot;Debug&quot;,
+    &quot;npm.format.executor&quot;: &quot;Run&quot;,
+    &quot;npm.format:dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.lint:dev.executor&quot;: &quot;Run&quot;,
+    &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\chernov-iv\\Documents\\GitHub Projects\\my-app\\client\\node_modules\\prettier&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;watcher.settings&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\chernov-iv\\Documents\\GitHub Projects\\my-app\\client\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\chernov-iv\Documents\GitHub Projects\my-app\client\src\assets" />
+      <recent name="C:\Users\chernov-iv\Documents\GitHub Projects\my-app\client\src\pages" />
+      <recent name="C:\Users\chernov-iv\Documents\GitHub Projects\my-app\client\src\components" />
+      <recent name="C:\Users\chernov-iv\Documents\GitHub Projects\my-app\client" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.build:client">
+    <configuration name="build:client" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="build:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="build:prod" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build:prod" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="build:server" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/server/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="format" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="format" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="lint:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="lint:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/client/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.build:prod" />
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.format" />
+        <item itemvalue="npm.build:dev" />
+        <item itemvalue="npm.lint:dev" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1bbe5d6c-c9ef-4a3a-828d-0b40e1a59666" name="Changes" comment="" />
+      <created>1721215263117</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1721215263117</updated>
+      <workItem from="1721215267632" duration="1939000" />
+      <workItem from="1721217217271" duration="886000" />
+      <workItem from="1721218113501" duration="793000" />
+      <workItem from="1721219065219" duration="129000" />
+      <workItem from="1721219203264" duration="391000" />
+      <workItem from="1721219603445" duration="893000" />
+      <workItem from="1721220505949" duration="1044000" />
+      <workItem from="1721221559098" duration="828000" />
+      <workItem from="1721222396323" duration="637000" />
+      <workItem from="1721223043870" duration="108000" />
+      <workItem from="1721223160287" duration="1019000" />
+      <workItem from="1721224191228" duration="1046000" />
+      <workItem from="1721225247856" duration="212000" />
+      <workItem from="1721281610665" duration="1034000" />
+      <workItem from="1721282655905" duration="1437000" />
+      <workItem from="1721287351227" duration="2523000" />
+      <workItem from="1721302393924" duration="238000" />
+      <workItem from="1721302644743" duration="8516000" />
+      <workItem from="1721366027588" duration="578000" />
+      <workItem from="1721366660366" duration="1997000" />
+      <workItem from="1721368677710" duration="150000" />
+      <workItem from="1721368842863" duration="1401000" />
+      <workItem from="1721370260432" duration="575000" />
+      <workItem from="1721374928817" duration="709000" />
+      <workItem from="1721375649097" duration="89000" />
+      <workItem from="1721375748705" duration="882000" />
+      <workItem from="1721376642053" duration="47000" />
+      <workItem from="1721377270700" duration="794000" />
+      <workItem from="1721378105730" duration="2525000" />
+      <workItem from="1721381662726" duration="2040000" />
+      <workItem from="1721387700628" duration="1391000" />
+      <workItem from="1721389102398" duration="405000" />
+      <workItem from="1721389518779" duration="283000" />
+      <workItem from="1721389811839" duration="637000" />
+      <workItem from="1721390792172" duration="6219000" />
+      <workItem from="1721650873282" duration="994000" />
+      <workItem from="1721735307833" duration="4745000" />
+      <workItem from="1721740350187" duration="217000" />
+      <workItem from="1721740577262" duration="974000" />
+      <workItem from="1721741742377" duration="1365000" />
+      <workItem from="1721743120699" duration="454000" />
+      <workItem from="1721981656999" duration="216000" />
+      <workItem from="1721981879242" duration="2000" />
+      <workItem from="1722406094390" duration="629000" />
+      <workItem from="1722497433619" duration="4579000" />
+      <workItem from="1722502548822" duration="83000" />
+      <workItem from="1722502645049" duration="81000" />
+      <workItem from="1722502735818" duration="705000" />
+      <workItem from="1722503452633" duration="557000" />
+      <workItem from="1722504066127" duration="580000" />
+      <workItem from="1722508557958" duration="2729000" />
+      <workItem from="1722511467652" duration="21000" />
+      <workItem from="1722511639879" duration="42000" />
+      <workItem from="1724049115838" duration="204000" />
+      <workItem from="1724403471776" duration="62000" />
+      <workItem from="1724841467377" duration="310000" />
+      <workItem from="1724842430351" duration="112000" />
+      <workItem from="1724842571764" duration="2785000" />
+      <workItem from="1724845974604" duration="4386000" />
+      <workItem from="1724850920164" duration="160000" />
+      <workItem from="1724851088333" duration="541000" />
+      <workItem from="1724851639338" duration="227000" />
+      <workItem from="1724851939667" duration="474000" />
+      <workItem from="1724853210013" duration="599000" />
+      <workItem from="1725279100115" duration="665000" />
+      <workItem from="1725280111974" duration="39000" />
+      <workItem from="1725280396367" duration="832000" />
+      <workItem from="1725426965449" duration="243000" />
+      <workItem from="1725429788206" duration="53000" />
+      <workItem from="1725513444204" duration="13000" />
+      <workItem from="1726750947186" duration="608000" />
+    </task>
+    <task id="LOCAL-00001" summary="bug 0 Add EsLint and Prettier">
+      <option name="closed" value="true" />
+      <created>1721225448533</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1721225448533</updated>
+    </task>
+    <task id="LOCAL-00002" summary="bug 0 add aliases">
+      <option name="closed" value="true" />
+      <created>1721284078798</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1721284078798</updated>
+    </task>
+    <task id="LOCAL-00003" summary="bug 0 build errors">
+      <option name="closed" value="true" />
+      <created>1721308812791</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1721308812791</updated>
+    </task>
+    <task id="LOCAL-00004" summary="bug Add routers template">
+      <option name="closed" value="true" />
+      <created>1721366556498</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1721366556498</updated>
+    </task>
+    <task id="LOCAL-00005" summary="bug 0 EsLint">
+      <option name="closed" value="true" />
+      <created>1721390427865</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1721390427865</updated>
+    </task>
+    <task id="LOCAL-00006" summary="bug 0 EsLint +codestyle">
+      <option name="closed" value="true" />
+      <created>1721391386975</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1721391386975</updated>
+    </task>
+    <task id="LOCAL-00007" summary="bug 0 add alias assets">
+      <option name="closed" value="true" />
+      <created>1721397606979</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1721397606979</updated>
+    </task>
+    <task id="LOCAL-00008" summary="bug 0">
+      <option name="closed" value="true" />
+      <created>1721740558288</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1721740558288</updated>
+    </task>
+    <task id="LOCAL-00009" summary="bug 0 add redux createApi.">
+      <option name="closed" value="true" />
+      <created>1722511274702</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1722511274702</updated>
+    </task>
+    <task id="LOCAL-00010" summary="bug 0">
+      <option name="closed" value="true" />
+      <created>1724850352587</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1724850352587</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="bug 0 Add EsLint and Prettier" />
+    <MESSAGE value="bug 0 add aliases" />
+    <MESSAGE value="bug 0 errors" />
+    <MESSAGE value="bug 0 build errors" />
+    <MESSAGE value="bug Add routers template" />
+    <MESSAGE value="bug 0 EsLint" />
+    <MESSAGE value="bug 0 EsLint +codestyle" />
+    <MESSAGE value="bug 0 add alias assets" />
+    <MESSAGE value="bug 0 add redux createApi." />
+    <MESSAGE value="bug 0" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug 0" />
+  </component>
+</project>

@@ -1,4 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { useMutation } from 'react-query';
+import axios from 'axios';
+
+const baseUrl = 'http://localhost:5000/api/user';
 
 interface ILoginResponse {
   accessToken: string;
@@ -10,43 +13,41 @@ interface ILoginRequest {
   password: string;
 }
 
-const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:5000/api/user',
-  prepareHeaders: (headers) => {
-    const accessToken = localStorage.getItem('accessToken');
+const prepareHeaders = () => {
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': ''
+  };
 
-    if (accessToken) {
-      headers.set('Authorization', `Bearer ${accessToken}`);
-    }
+  const accessToken = localStorage.getItem('accessToken');
 
-    return headers;
-  },
-});
+  if (accessToken) {
+    headers['Authorization']   = `Bearer ${accessToken}`;
+  }
 
-export const authApi = createApi({
-  baseQuery,
-  endpoints: (builder) => ({
-    login: builder.mutation<ILoginResponse, ILoginRequest>({
-      query: (credentials) => ({
-        url: 'login',
-        method: 'POST',
-        body: credentials,
-      }),
-    }),
-    registration: builder.mutation<ILoginResponse, ILoginRequest>({
-      query: (credentials) => ({
-        url: 'registartion',
-        method: 'POST',
-        body: credentials,
-      }),
-    }),
-    logout: builder.mutation<void, void>({
-      query: () => ({
-        url: 'logout',
-        method: 'POST',
-      }),
-    }),
-  }),
-});
+  return headers;
+};
 
-export const { useLoginMutation, useLogoutMutation } = authApi;
+const login = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
+  const response = await axios.post(`${baseUrl}/login`, credentials, {
+    headers: prepareHeaders(),
+  });
+  return response.data;
+};
+
+const registration = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
+  const response = await axios.post(`${baseUrl}/registration`, credentials, {
+    headers: prepareHeaders(),
+  });
+  return response.data;
+};
+
+const logout = async (): Promise<void> => {
+  await axios.post(`${baseUrl}/logout`, null, {
+    headers: prepareHeaders(),
+  });
+};
+
+export const useLoginMutation = () => useMutation(login);
+export const useRegistrationMutation = () => useMutation(registration);
+export const useLogoutMutation = () => useMutation(logout);

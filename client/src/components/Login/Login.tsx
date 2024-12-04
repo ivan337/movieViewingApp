@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useCallback, useRef } from 'react';
+import { InputHTMLAttributes, useCallback, useState } from 'react';
 
 import { FaLock, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,22 +11,20 @@ import { selectAuthError, setError, setToken } from '@/features/auth/authSlice';
 import { useLoginMutation } from '@/services/auth';
 
 const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
-  const dispatch = useDispatch();
-  const login = useRef<HTMLInputElement>(null);
-  const password = useRef<HTMLInputElement>(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();  
   const error = useSelector(selectAuthError);
-  const [loginMutation] = useLoginMutation();
+  const loginMutation = useLoginMutation();
 
   const onFormSubmit = useCallback(
-    async function (e: React.FormEvent<HTMLFormElement>) {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       try {
-        const resp = await loginMutation({
-          email: login.current.value,
-          password: password.current.value,
-        }).unwrap();
-
+        const resp = await loginMutation.mutateAsync({email, password});
+        
         if (resp.accessToken && resp.refreshToken) {
           dispatch(
             setToken({
@@ -42,14 +40,14 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
           localStorage.setItem('accessToken', resp.accessToken);
         }
       } catch (e) {
-        if ('data' in e) {
-          dispatch(setError(e.data.message));
+        if ('data' in e.response) {
+          dispatch(setError(e.response.data.message));
         } else {
-          dispatch(setError(e.error));
+          dispatch(setError(e.message));
         }
       }
     },
-    [login, password],
+    [email, password],
   );
 
   return (
@@ -64,7 +62,7 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
             <PepaInput
               className={classes.inputBox_inputText}
               required={true}
-              ref={login}
+              onChange={(e) => setEmail(e.target.value)}
               type={'text'}
               placeholder={'Логин'}
             />
@@ -75,7 +73,7 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
             <PepaInput
               className={classes.inputBox_inputText}
               required={true}
-              ref={password}
+              onChange={(e) => setPassword(e.target.value)}
               type={'password'}
               placeholder={'Пароль'}
             />
