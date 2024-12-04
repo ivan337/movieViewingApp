@@ -15,7 +15,7 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const dispatch = useDispatch();  
+  const dispatch = useDispatch();
   const error = useSelector(selectAuthError);
   const loginMutation = useLoginMutation();
 
@@ -24,8 +24,8 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
       e.preventDefault();
 
       try {
-        const resp = await loginMutation.mutateAsync({email, password});
-        
+        const resp = await loginMutation.mutateAsync({ email, password });
+
         if (resp.accessToken && resp.refreshToken) {
           dispatch(
             setToken({
@@ -35,12 +35,12 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
             }),
           );
 
-          appendCookie('refreshToken', resp.refreshToken, 14, false);
+          appendCookie('refreshToken', resp.refreshToken, 14, true);
 
           sessionStorage.setItem('accessToken', resp.accessToken);
         }
       } catch (e) {
-        if ('data' in e.response) {
+        if (e.response && 'data' in e.response) {
           dispatch(setError(e.response.data.message));
         } else {
           dispatch(setError(e.message));

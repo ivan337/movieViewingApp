@@ -1,5 +1,5 @@
-import { useMutation } from 'react-query';
 import axios from 'axios';
+import { useMutation } from 'react-query';
 
 const baseUrl = 'http://localhost:5000/api/user';
 
@@ -17,13 +17,13 @@ interface ILoginRequest {
 const prepareHeaders = () => {
   const headers = {
     'Content-Type': 'application/json',
-    'Authorization': ''
+    Authorization: '',
   };
 
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
 
   if (accessToken) {
-    headers['Authorization']   = `Bearer ${accessToken}`;
+    headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
   return headers;
@@ -36,7 +36,20 @@ const login = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
   return response.data;
 };
 
-const registration = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
+const refreshAccessToken = async (): Promise<ILoginResponse> => {
+  const response = await axios.post(
+    `${baseUrl}/refresh-token`,
+    {},
+    {
+      withCredentials: true,
+    },
+  );
+  return response.data;
+};
+
+const registration = async (
+  credentials: ILoginRequest,
+): Promise<ILoginResponse> => {
   const response = await axios.post(`${baseUrl}/registration`, credentials, {
     headers: prepareHeaders(),
   });
@@ -44,11 +57,17 @@ const registration = async (credentials: ILoginRequest): Promise<ILoginResponse>
 };
 
 const logout = async (): Promise<void> => {
-  await axios.post(`${baseUrl}/logout`, null, {
-    headers: prepareHeaders(),
-  });
+  await axios.post(
+    `${baseUrl}/logout`,
+    {},
+    {
+      headers: prepareHeaders(),
+    },
+  );
 };
 
 export const useLoginMutation = () => useMutation(login);
+
+export const useRefreshTokenMutation = () => useMutation(refreshAccessToken);
 export const useRegistrationMutation = () => useMutation(registration);
 export const useLogoutMutation = () => useMutation(logout);
