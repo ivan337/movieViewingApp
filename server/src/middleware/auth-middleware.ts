@@ -16,20 +16,24 @@ export default function(req: Request, res: Response, next: NextFunction) {
         const authHeader = req.headers.authorization;
 
         if (!authHeader) {
-            return next(ApiError.unauthorizedError());
+            throw ApiError.unauthorizedError();
         }
 
         const token = authHeader.split(' ')[1];
 
         if (!token) {
-            return next(ApiError.unauthorizedError());
+            throw ApiError.unauthorizedError();
         }
 
         //TODO: req.user ???
         req.user = tokenService.validateAccessToken(token) as CustomJwtPayload;
+        
+        if (!req.user) {
+            throw ApiError.unauthorizedError();
+        }
 
         return next();
-    } catch (e) {
-        return next(ApiError.unauthorizedError());
+    } catch (err) {
+        next(err)
     }
 }

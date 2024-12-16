@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, useCallback, useState } from 'react';
+import {InputHTMLAttributes, useCallback, useEffect, useState} from 'react';
 
 import { FaLock, FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
   const dispatch = useDispatch();
   const error = useSelector(selectAuthError);
   const loginMutation = useLoginMutation();
-
+  
   const onFormSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -40,15 +40,17 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
           sessionStorage.setItem('accessToken', resp.accessToken);
         }
       } catch (e) {
-        if (e.response && 'data' in e.response) {
-          dispatch(setError(e.response.data.message));
-        } else {
-          dispatch(setError(e.message));
-        }
+        const errorMessage = e.response?.data?.message || e.message;
+        
+        dispatch(setError(errorMessage));
       }
     },
-    [email, password],
+    [email, password, dispatch, loginMutation],
   );
+  
+  useEffect(() => {
+    dispatch(setError(''));
+  }, [email, password, dispatch]);
 
   return (
     <div className={`${classes.login} ${props.className}`}>
@@ -93,11 +95,12 @@ const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
             <PepaButton
               className={classes.inputForm__loginButton}
               type={'submit'}
+              disabled={loginMutation.isLoading}
             >
-              Войти
+              {loginMutation.isLoading ? 'Logging in...' : 'Login'}              
             </PepaButton>
           </div>
-          {error && error}
+          {error && <div>Error: {error}</div>}
         </form>
       </div>
     </div>
