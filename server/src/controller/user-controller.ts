@@ -2,10 +2,19 @@ import type express from 'express';
 import ApiError from "../exception/api-error";
 import userService from "../service/user-service";
 import UserDto from "../dtos/user-dto";
+import {AppRequest} from "../types/request";
 
 class UserController {
-    async login(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async login(req: AppRequest, res: express.Response, next: express.NextFunction) {
         try {
+            await new Promise<void>((res, rej) => {
+                setTimeout(() => {res() }, 5000);
+            });
+
+            if (req.abortSignal?.aborted) {
+                console.log('test super test');
+            }
+
             const {email, password} = req.body;
 
             const userData = await userService.login(email, password);
@@ -16,7 +25,7 @@ class UserController {
         }
     }
 
-    async registartion(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async registartion(req: AppRequest, res: express.Response, next: express.NextFunction) {
         try {
             const {email, password} = req.body;
 
@@ -34,7 +43,7 @@ class UserController {
         }
     }
 
-    async logout(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async logout(req: AppRequest, res: express.Response, next: express.NextFunction) {
         try {
             const { accessToken } = req.cookies;
 
@@ -47,7 +56,7 @@ class UserController {
         }
     }
 
-    async loadProfile(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async loadProfile(req: AppRequest, res: express.Response, next: express.NextFunction) {
         try {
             const testUser = new UserDto({email: 'test', id: 1, isActivated: true});
 
@@ -57,7 +66,7 @@ class UserController {
         }
     }
 
-    async refresh(req: express.Request, res: express.Response, next: express.NextFunction) {
+    async refresh(req: AppRequest, res: express.Response, next: express.NextFunction) {
         try {
             const { refreshToken } = req.cookies;
 

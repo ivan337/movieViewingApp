@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useMutation } from 'react-query';
+import { v4 } from 'uuid';
 
 const baseUrl = 'http://localhost:5000/api/user';
 
@@ -18,6 +19,7 @@ const prepareHeaders = () => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: '',
+    'idempotency-key': v4(),
   };
 
   const accessToken = sessionStorage.getItem('accessToken');

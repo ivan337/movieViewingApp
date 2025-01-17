@@ -1,7 +1,8 @@
 import ApiError from "../exception/api-error";
-import { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
+import {AppRequest} from "../types/request";
 
-const errorMiddleware = function(err: Error, req: Request, res: Response, next: NextFunction) {
+const errorMiddleware = function(err: Error, req: AppRequest, res: express.Response, next: express.NextFunction) {
     console.log(err);
 
     if (err instanceof ApiError) {

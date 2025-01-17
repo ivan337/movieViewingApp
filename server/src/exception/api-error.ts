@@ -22,6 +22,14 @@ class ApiError extends Error {
     static badRequest(message: string) {
         return new ApiError(400, message)
     }
+
+    static clientClosedRequest() {
+        return new ApiError(499, 'Client Closed Request')
+    }
+
+    static abortError() {
+        return new ApiError(500, 'Request was aborted')
+    }
 }
 
 export default ApiError

@@ -6,6 +6,8 @@ import 'dotenv/config';
 import errorMiddleware from "./middleware/error-middleware";
 import sqliteConnection from "./dbService/sqlite-connection";
 import path from "node:path";
+import idempotencyMiddleware from "./middleware/idempotency-middleware";
+import abortMiddleware from "./middleware/abort-middleware";
 
 const app = express();
 
@@ -17,13 +19,20 @@ app.use(cors({
     origin: process.env.CLIENT_URL,
     credentials: true
 }));
-app.use('/api', router);
 
+app.use(abortMiddleware);
+app.use(idempotencyMiddleware);
+
+app.use('/api', router);
 app.use(errorMiddleware);
 
-sqliteConnection.sync({force: true}).then(() => {
-    console.log('sqlite db is ready')
-});
+sqliteConnection.sync({force: true})
+    .then(() => {
+        console.log('sqlite db is ready')
+    })
+    .catch((err) => {
+        console.error('Error synchronizing database:', err);
+    });
 
 if (process.env.MODE === 'development') {
     const ROOT_PATH = path.resolve(__dirname, '..');

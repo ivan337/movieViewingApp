@@ -1,7 +1,8 @@
 import ApiError from '../exception/api-error';
-import { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import tokenService, {CustomJwtPayload} from '../service/token-service';
 import { JwtPayload } from 'jsonwebtoken';
+import {AppRequest} from "../types/request";
 
 declare global {
     namespace Express {
@@ -11,7 +12,7 @@ declare global {
     }
 }
 
-export default function(req: Request, res: Response, next: NextFunction) {
+export default function(req: AppRequest, res: express.Response, next: express.NextFunction) {
     try {
         const authHeader = req.headers.authorization;
 
