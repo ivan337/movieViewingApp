@@ -9,105 +9,105 @@ import UserModel from '../models/user-model';
 import tokenService, { CustomJwtPayload } from './token-service';
 
 class UserService {
-  async login(email: string, password: string) {
-    const user = await UserModel.findOne({
-      where: {
-        email: email,
-      },
-    });
+    async login(email: string, password: string) {
+        const user = await UserModel.findOne({
+            where: {
+                email: email,
+            },
+        });
 
-    if (!user) {
-      throw ApiError.unauthorizedError();
+        if (!user) {
+            throw ApiError.unauthorizedError();
+        }
+
+        const passwordEq = await bcrypt.compare(password, user.password);
+
+        if (!passwordEq) {
+            throw ApiError.badRequest('Неверный пароль');
+        }
+
+        const userDto = new UserDto(user);
+
+        const tokens = tokenService.generateToken({ ...userDto });
+
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+        return {
+            ...tokens,
+            userDto,
+        };
+    }
+    async registration(email: string, password: string) {
+        const user = await UserModel.findOne({
+            where: {
+                email: email,
+            },
+        });
+
+        if (user) {
+            throw apiError.badRequest(
+                `Пользователь с почтовым адресом ${email} уже существует`,
+            );
+        } else {
+            const hashPassword = await bcrypt.hash(password, 3);
+            const activationLink = 'https://activationlink.com';
+            const user = await UserModel.create({
+                activationLink,
+                email,
+                isActivated: false,
+                password: hashPassword,
+            });
+
+            const userDto = new UserDto(user);
+
+            const tokens = tokenService.generateToken({ ...userDto });
+
+            await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+            return {
+                ...tokens,
+                user: userDto,
+            };
+        }
     }
 
-    const passwordEq = await bcrypt.compare(password, user.password);
-
-    if (!passwordEq) {
-      throw ApiError.badRequest('Неверный пароль');
+    async logout(accessToken: string) {
+        await tokenService.removeToken(accessToken);
     }
 
-    const userDto = new UserDto(user);
+    async refresh(refreshToken: string) {
+        if (!refreshToken) {
+            throw ApiError.unauthorizedError();
+        }
 
-    const tokens = tokenService.generateToken({ ...userDto });
+        const userData = (await tokenService.validateRefreshToken(
+            refreshToken,
+        )) as CustomJwtPayload;
+        const tokenFromDb = (await tokenService.findRefreshToken(
+            refreshToken,
+        )) as TokenModel;
 
-    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        if (!userData || !tokenFromDb) {
+            throw ApiError.unauthorizedError();
+        }
 
-    return {
-      ...tokens,
-      userDto,
-    };
-  }
-  async registration(email: string, password: string) {
-    const user = await UserModel.findOne({
-      where: {
-        email: email,
-      },
-    });
+        const user = await UserModel.findByPk(userData.id);
 
-    if (user) {
-      throw apiError.badRequest(
-        `Пользователь с почтовым адресом ${email} уже существует`,
-      );
-    } else {
-      const hashPassword = await bcrypt.hash(password, 3);
-      const activationLink = 'https://activationlink.com';
-      const user = await UserModel.create({
-        activationLink,
-        email,
-        isActivated: false,
-        password: hashPassword,
-      });
+        if (!user) {
+            throw ApiError.unauthorizedError();
+        }
 
-      const userDto = new UserDto(user);
+        const userDto = new UserDto(user);
 
-      const tokens = tokenService.generateToken({ ...userDto });
+        const tokens = tokenService.generateToken({ ...userDto });
 
-      await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-      return {
-        ...tokens,
-        user: userDto,
-      };
+        return {
+            ...tokens,
+            user: userDto,
+        };
     }
-  }
-
-  async logout(accessToken: string) {
-    await tokenService.removeToken(accessToken);
-  }
-
-  async refresh(refreshToken: string) {
-    if (!refreshToken) {
-      throw ApiError.unauthorizedError();
-    }
-
-    const userData = (await tokenService.validateRefreshToken(
-      refreshToken,
-    )) as CustomJwtPayload;
-    const tokenFromDb = (await tokenService.findRefreshToken(
-      refreshToken,
-    )) as TokenModel;
-
-    if (!userData || !tokenFromDb) {
-      throw ApiError.unauthorizedError();
-    }
-
-    const user = await UserModel.findByPk(userData.id);
-
-    if (!user) {
-      throw ApiError.unauthorizedError();
-    }
-
-    const userDto = new UserDto(user);
-
-    const tokens = tokenService.generateToken({ ...userDto });
-
-    await tokenService.saveToken(userDto.id, tokens.refreshToken);
-
-    return {
-      ...tokens,
-      user: userDto,
-    };
-  }
 }
 
 export default new UserService();

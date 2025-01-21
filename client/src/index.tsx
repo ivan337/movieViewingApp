@@ -13,11 +13,11 @@ const rootElement = document.getElementById('root') as HTMLElement;
 const root = createRoot(rootElement);
 
 root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+    <StrictMode>
+        <App />
+    </StrictMode>,
 );
-//TODO: Redux
+
 //<Provider store={store}>
 //<App />
 //</Provider>

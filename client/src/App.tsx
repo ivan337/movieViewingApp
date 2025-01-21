@@ -6,13 +6,13 @@ import coreRouter from '@/routes';
 import store from '@/store/store';
 
 function App() {
-  return (
-    <div className="App">
-      <Provider store={store}>
-        <RouterProvider router={coreRouter} />
-      </Provider>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Provider store={store}>
+                <RouterProvider router={coreRouter} />
+            </Provider>
+        </div>
+    );
 }
 
 export default App;

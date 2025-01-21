@@ -3,10 +3,9 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   // Настройки парсера
   parserOptions: {
-    // Указываем версию ECMAScript
-    ecmaVersion: 2021,
-    // Указываем тип исходного кода как модуль
-    sourceType: 'module',
+    ecmaVersion: 2021, // Указываем версию ECMAScript
+    sourceType: 'module', // Указываем тип исходного кода как модуль
+    project: './tsconfig.json', // Указываем путь к tsconfig.json
   },
   // Настройки для плагинов
   settings: {
@@ -14,7 +13,7 @@ module.exports = {
     'import/resolver': {
       node: {
         // Указываем расширения файлов, которые будут использоваться при импортах
-        extensions: ['.ts'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
       },
     },
   },
@@ -23,7 +22,6 @@ module.exports = {
     'eslint:recommended', // Базовые рекомендуемые правила ESLint
     'plugin:@typescript-eslint/recommended', // Рекомендуемые правила для TypeScript
     'plugin:prettier/recommended', // Интеграция Prettier с ESLint
-    'prettier', // Отключение правил ESLint, конфликтующих с Prettier
   ],
   // Плагины, которые будут использоваться
   plugins: [
@@ -34,6 +32,8 @@ module.exports = {
   // Правила ESLint
   rules: {
     'prettier/prettier': 'error', // Включаем Prettier как ESLint правило
+    '@typescript-eslint/explicit-function-return-type': 'off', // Отключаем обязательное указание типов возвращаемых значений
+    '@typescript-eslint/no-unused-vars': 'warn', // Предупреждение для неиспользуемых переменных
     'import/order': [
       'error',
       {
@@ -45,11 +45,11 @@ module.exports = {
           'parent',
           'sibling',
           'index',
-        ],
-        'newlines-between': 'always',
+        ], 
+        'newlines-between': 'always', // Пустые строки между группами
         alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
+          order: 'asc', // Сортировка по алфавиту
+          caseInsensitive: true, // Без учета регистра
         },
       },
     ],
@@ -57,5 +57,6 @@ module.exports = {
   // Среда выполнения
   env: {
     node: true, // Включаем поддержку Node.js
+    es2021: true, // Включаем поддержку ES2021
   },
 };

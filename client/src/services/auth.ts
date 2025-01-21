@@ -5,67 +5,67 @@ import { v4 } from 'uuid';
 const baseUrl = 'http://localhost:5000/api/user';
 
 interface ILoginResponse {
-  accessToken: string;
-  refreshToken: string;
-  isActivated: string;
+    accessToken: string;
+    refreshToken: string;
+    isActivated: string;
 }
 
 interface ILoginRequest {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
 
 const prepareHeaders = () => {
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: '',
-    'idempotency-key': v4(),
-};
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: '',
+        'idempotency-key': v4(),
+    };
 
-  const accessToken = sessionStorage.getItem('accessToken');
+    const accessToken = sessionStorage.getItem('accessToken');
 
-  if (accessToken) {
-    headers['Authorization'] = `Bearer ${accessToken}`;
-  }
+    if (accessToken) {
+        headers['Authorization'] = `Bearer ${accessToken}`;
+    }
 
-  return headers;
+    return headers;
 };
 
 const login = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
-  const response = await axios.post(`${baseUrl}/login`, credentials, {
-    headers: prepareHeaders(),
-  });
-  return response.data;
+    const response = await axios.post(`${baseUrl}/login`, credentials, {
+        headers: prepareHeaders(),
+    });
+    return response.data;
 };
 
 const refreshAccessToken = async (): Promise<ILoginResponse> => {
-  const response = await axios.post(
-    `${baseUrl}/refresh-token`,
-    {},
-    {
-      withCredentials: true,
-    },
-  );
-  return response.data;
+    const response = await axios.post(
+        `${baseUrl}/refresh-token`,
+        {},
+        {
+            withCredentials: true,
+        },
+    );
+    return response.data;
 };
 
 const registration = async (
-  credentials: ILoginRequest,
+    credentials: ILoginRequest,
 ): Promise<ILoginResponse> => {
-  const response = await axios.post(`${baseUrl}/registration`, credentials, {
-    headers: prepareHeaders(),
-  });
-  return response.data;
+    const response = await axios.post(`${baseUrl}/registration`, credentials, {
+        headers: prepareHeaders(),
+    });
+    return response.data;
 };
 
 const logout = async (): Promise<void> => {
-  await axios.post(
-    `${baseUrl}/logout`,
-    {},
-    {
-      headers: prepareHeaders(),
-    },
-  );
+    await axios.post(
+        `${baseUrl}/logout`,
+        {},
+        {
+            headers: prepareHeaders(),
+        },
+    );
 };
 
 export const useLoginMutation = () => useMutation(login);

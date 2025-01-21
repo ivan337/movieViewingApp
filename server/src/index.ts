@@ -18,84 +18,84 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const initDb = async () => {
-  try {
-    await sqliteConnection.sync({ force: false });
-    console.log('sqlite db is ready');
-  } catch (err) {
-    console.error('Error synchronizing database:', err);
-  }
+    try {
+        await sqliteConnection.sync({ force: false });
+        console.log('sqlite db is ready');
+    } catch (err) {
+        console.error('Error synchronizing database:', err);
+    }
 };
 
 const initMiddleware = () => {
-  app.use(express.json());
-  app.use(cookieParser());
-  app.use(
-    cors({
-      origin: process.env.CLIENT_URL,
-      credentials: true,
-    }),
-  );
+    app.use(express.json());
+    app.use(cookieParser());
+    app.use(
+        cors({
+            origin: process.env.CLIENT_URL,
+            credentials: true,
+        }),
+    );
 
-  app.use(abortMiddleware);
-  app.use(idempotencyMiddleware);
+    app.use(abortMiddleware);
+    app.use(idempotencyMiddleware);
 
-  app.use('/api', router);
-  app.use(errorMiddleware);
+    app.use('/api', router);
+    app.use(errorMiddleware);
 
-  const ROOT_PATH = path.resolve(__dirname, '..');
-  app.use(express.static(path.join(ROOT_PATH, 'public')));
+    const ROOT_PATH = path.resolve(__dirname, '..');
+    app.use(express.static(path.join(ROOT_PATH, 'public')));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(ROOT_PATH, 'public', 'index.html'));
-  });
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(ROOT_PATH, 'public', 'index.html'));
+    });
 };
 
 const gracefulShutdown = (server: http.Server, signal: string) => {
-  console.log(`Received ${signal}. Starting graceful shutdown...`);
+    console.log(`Received ${signal}. Starting graceful shutdown...`);
 
-  server.close(() => {
-    console.log('Server closed.');
+    server.close(() => {
+        console.log('Server closed.');
 
-    sqliteConnection.close().then(() => {
-      console.log('Database connection closed');
+        sqliteConnection.close().then(() => {
+            console.log('Database connection closed');
+        });
+
+        process.exit(0);
     });
 
-    process.exit(0);
-  });
-
-  setTimeout(() => {
-    console.error('Forcing shutdown...');
-    process.exit(1);
-  }, 10000); // 10 секунд
+    setTimeout(() => {
+        console.error('Forcing shutdown...');
+        process.exit(1);
+    }, 10000); // 10 секунд
 };
 
 const startServer = async () => {
-  try {
-    const server = app.listen(PORT, () => {
-      console.log(`Server starter on PORT = ${PORT}`);
-    });
+    try {
+        const server = app.listen(PORT, () => {
+            console.log(`Server starter on PORT = ${PORT}`);
+        });
 
-    server.setTimeout(60 * 1000);
+        server.setTimeout(60 * 1000);
 
-    server.keepAliveTimeout = 30 * 1000;
-    server.headersTimeout = 31 * 1000;
+        server.keepAliveTimeout = 30 * 1000;
+        server.headersTimeout = 31 * 1000;
 
-    server.on('connection', (socket) => {
-      socket.setTimeout(60 * 1000); // 60 секунд
-    });
+        server.on('connection', (socket) => {
+            socket.setTimeout(60 * 1000); // 60 секунд
+        });
 
-    process.on('SIGINT', () => gracefulShutdown(server, 'SIGINT'));
-    process.on('SIGTERM', () => gracefulShutdown(server, 'SIGTERM'));
-  } catch (e) {
-    console.error(e);
-  }
+        process.on('SIGINT', () => gracefulShutdown(server, 'SIGINT'));
+        process.on('SIGTERM', () => gracefulShutdown(server, 'SIGTERM'));
+    } catch (e) {
+        console.error(e);
+    }
 };
 
 const start = async () => {
-  await initDb();
-  initMiddleware();
+    await initDb();
+    initMiddleware();
 
-  await startServer();
+    await startServer();
 };
 
 start();
