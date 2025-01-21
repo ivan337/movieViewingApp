@@ -1,6 +1,7 @@
 import Router from 'express';
-import userRouter from './userRouter';
+
 import movieRouter from './movieRouter';
+import userRouter from './userRouter';
 
 const router = Router();
 

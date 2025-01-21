@@ -1,6 +1,7 @@
-import authMiddleware from '../middleware/auth-middleware';
-import movieController from '../controller/movie-controller';
 import Router from 'express';
+
+import movieController from '../controller/movie-controller';
+import authMiddleware from '../middleware/auth-middleware';
 
 const router = Router();
 

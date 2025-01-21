@@ -1,40 +1,41 @@
-import ApiError from '../exception/api-error';
-import express, { NextFunction, Request, Response } from 'express';
-import tokenService, {CustomJwtPayload} from '../service/token-service';
-import { JwtPayload } from 'jsonwebtoken';
-import {AppRequest} from "../types/request";
+import express from 'express';
 
-declare global {
-    namespace Express {
-        interface Request {
-            user?: CustomJwtPayload;
-        }
-    }
+import ApiError from '../exception/api-error';
+import tokenService, { CustomJwtPayload } from '../service/token-service';
+import { AppRequest } from '../types/request';
+
+declare module 'express' {
+  interface Request {
+    user?: CustomJwtPayload;
+  }
 }
 
-export default function(req: AppRequest, res: express.Response, next: express.NextFunction) {
-    try {
-        const authHeader = req.headers.authorization;
+export default function (
+  req: AppRequest,
+  res: express.Response,
+  next: express.NextFunction,
+) {
+  try {
+    const authHeader = req.headers.authorization;
 
-        if (!authHeader) {
-            throw ApiError.unauthorizedError();
-        }
-
-        const token = authHeader.split(' ')[1];
-
-        if (!token) {
-            throw ApiError.unauthorizedError();
-        }
-
-        //TODO: req.user ???
-        req.user = tokenService.validateAccessToken(token) as CustomJwtPayload;
-        
-        if (!req.user) {
-            throw ApiError.unauthorizedError();
-        }
-
-        return next();
-    } catch (err) {
-        next(err)
+    if (!authHeader) {
+      throw ApiError.unauthorizedError();
     }
+
+    const token = authHeader.split(' ')[1];
+
+    if (!token) {
+      throw ApiError.unauthorizedError();
+    }
+
+    req.user = tokenService.validateAccessToken(token) as CustomJwtPayload;
+
+    if (!req.user) {
+      throw ApiError.unauthorizedError();
+    }
+
+    return next();
+  } catch (err) {
+    next(err);
+  }
 }

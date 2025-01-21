@@ -20,7 +20,7 @@ const prepareHeaders = () => {
     'Content-Type': 'application/json',
     Authorization: '',
     'idempotency-key': v4(),
-  };
+};
 
   const accessToken = sessionStorage.getItem('accessToken');
 

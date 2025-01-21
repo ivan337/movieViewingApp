@@ -1,14 +1,23 @@
-import ApiError from "../exception/api-error";
-import express, { Request, Response, NextFunction } from 'express';
-import {AppRequest} from "../types/request";
+import express from 'express';
 
-const errorMiddleware = function(err: Error, req: AppRequest, res: express.Response, next: express.NextFunction) {
-    console.log(err);
+import ApiError from '../exception/api-error';
+import { AppRequest } from '../types/request';
 
-    if (err instanceof ApiError) {
-        return res.status(err.status).json({message: err.message});
-    }
+const errorMiddleware = function (
+  err: Error,
+  req: AppRequest,
+  res: express.Response,
+  next: express.NextFunction,
+) {
+  console.log(err);
 
-    return res.status(500).json({message: 'Непредвиненная ошибка'})
+  if (err instanceof ApiError) {
+    // Если ошибка является экземпляром ApiError, отправляем соответствующий ответ
+    return res.status(err.status).json({ message: err.message });
+  }
+
+  // Для всех остальных ошибок отправляем ответ с кодом 500
+  return res.status(500).json({ message: 'Непредвиденная ошибка' });
 };
-export default errorMiddleware
+
+export default errorMiddleware;
