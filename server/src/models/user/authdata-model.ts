@@ -1,27 +1,22 @@
-import { Model, DataTypes, Optional } from 'sequelize';
+import {
+    Model,
+    DataTypes,
+    InferAttributes,
+    InferCreationAttributes,
+    CreationOptional,
+} from 'sequelize';
 
-import sqliteConnection from '../dbService/sqlite-connection';
+import sqliteConnection from '../../dbService/sqlite-connection';
 
-interface AuthDataAttributes {
-    id: string;
-    userId: string;
-    email: string;
-    passwordHash: string;
-    lastLogin?: Date;
-}
-
-interface AuthDataCreationAttributes
-    extends Optional<AuthDataAttributes, 'id' | 'lastLogin'> {}
-
-class AuthData
-    extends Model<AuthDataAttributes, AuthDataCreationAttributes>
-    implements AuthDataAttributes
-{
-    public id!: string;
-    public userId!: string;
-    public email!: string;
-    public passwordHash!: string;
-    public lastLogin!: Date;
+class AuthData extends Model<
+    InferAttributes<AuthData>,
+    InferCreationAttributes<AuthData>
+> {
+    declare id: CreationOptional<string>;
+    declare userId: CreationOptional<string>;
+    declare email: string;
+    declare passwordHash: string;
+    declare lastLogin: CreationOptional<Date>;
 }
 
 AuthData.init(

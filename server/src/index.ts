@@ -9,6 +9,7 @@ import sqliteConnection from './dbService/sqlite-connection';
 import abortMiddleware from './middleware/abort-middleware';
 import errorMiddleware from './middleware/error-middleware';
 import idempotencyMiddleware from './middleware/idempotency-middleware';
+import { setupAssociations } from './models/user';
 import router from './router/index';
 
 import 'dotenv/config';
@@ -19,7 +20,9 @@ const PORT = process.env.PORT || 5000;
 
 const initDb = async () => {
     try {
-        await sqliteConnection.sync({ force: false });
+        setupAssociations();
+
+        await sqliteConnection.sync({ force: true });
         console.log('sqlite db is ready');
     } catch (err) {
         console.error('Error synchronizing database:', err);

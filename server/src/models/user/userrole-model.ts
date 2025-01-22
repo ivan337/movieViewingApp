@@ -1,15 +1,10 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, InferAttributes, CreationOptional } from 'sequelize';
 
-import sqliteConnection from '../dbService/sqlite-connection';
+import sqliteConnection from '../../dbService/sqlite-connection';
 
-interface UserRoleAttributes {
-    userId: string;
-    roleId: string;
-}
-
-class UserRole extends Model<UserRoleAttributes> implements UserRoleAttributes {
-    public userId!: string;
-    public roleId!: string;
+class UserRole extends Model<InferAttributes<UserRole>> {
+    declare userId: CreationOptional<string>;
+    declare roleId: CreationOptional<string>;
 }
 
 UserRole.init(

@@ -1,27 +1,22 @@
-import { Model, DataTypes, Optional } from 'sequelize';
+import {
+    Model,
+    DataTypes,
+    InferAttributes,
+    InferCreationAttributes,
+    CreationOptional,
+} from 'sequelize';
 
-import sqliteConnection from '../dbService/sqlite-connection';
+import sqliteConnection from '../../dbService/sqlite-connection';
 
-interface TokenAttributes {
-    id: string;
-    userId: string;
-    token: string;
-    expiresAt: Date;
-    isRevoked: boolean;
-}
-
-interface TokenCreationAttributes
-    extends Optional<TokenAttributes, 'id' | 'isRevoked'> {}
-
-class Token
-    extends Model<TokenAttributes, TokenCreationAttributes>
-    implements TokenAttributes
-{
-    public id!: string;
-    public userId!: string;
-    public token!: string;
-    public expiresAt!: Date;
-    public isRevoked!: boolean;
+class Token extends Model<
+    InferAttributes<Token>,
+    InferCreationAttributes<Token>
+> {
+    declare id: CreationOptional<string>;
+    declare userId: string;
+    declare token: string;
+    declare expiresAt: Date;
+    declare isRevoked: CreationOptional<boolean>;
 }
 
 Token.init(

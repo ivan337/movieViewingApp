@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
-import { createToken, findTokenByUserId } from '../models';
-import { Token } from '../models';
+import { Token } from '../models/user';
+import User from '../models/user/user-model';
 
 interface UserData {
     email: string;
@@ -36,27 +36,29 @@ class TokenService {
         return { accessToken, refreshToken };
     }
 
-    async saveToken(userId: string, refreshToken: string): Promise<Token> {
-        const tokenData = await findTokenByUserId(userId);
+    async saveToken(userId: string, refreshToken: string): Promise<void> {
+        let tokenData = await this.findTokenByUserId(userId);
 
         if (!tokenData) {
-            await createToken({
+            await this.createToken({
                 userId,
                 token: refreshToken,
             });
 
-            return findTokenByUserId(userId);
+            tokenData = await this.findTokenByUserId(userId);
         }
 
-        tokenData.set('token', refreshToken);
+        if (tokenData) {
+            tokenData.set('token', refreshToken);
 
-        return await tokenData.save();
+            await tokenData.save();
+        }
     }
 
-    async removeToken(refreshToken: string) {
-        await TokenModel.destroy({
+    async removeToken(token: string) {
+        await Token.destroy({
             where: {
-                refreshToken,
+                token,
             },
         });
     }
@@ -83,22 +85,53 @@ class TokenService {
         }
     }
 
-    async findRefreshToken(refreshToken: string): Promise<TokenModel | null> {
-        return await TokenModel.findOne({
-            where: {
-                refreshToken,
-            },
+    findToken(token: string): Promise<Token | null> {
+        return Token.findOne({
+            where: { token },
         });
     }
-    /*
-    async findAccessToken(accessToken: string): Promise<TokenModel | null> {
-        return await TokenModel.findOne({
-            where: {
-                accessToken
+
+    findTokenByUserId(userId: string): Promise<Token | null> {
+        return Token.findOne({
+            where: { userId },
+            include: [
+                {
+                    model: User,
+                    as: 'User',
+                    required: true,
+                },
+            ],
+        });
+    }
+
+    async createToken({
+        userId,
+        token,
+    }: {
+        userId: string;
+        token: string;
+    }): Promise<void> {
+        try {
+            const user = await User.findByPk(userId);
+
+            if (!user) {
+                throw new Error('Пользователь не найден');
             }
-        });
+
+            await Token.create({
+                token,
+                userId,
+                expiresAt: new Date(
+                    new Date().getTime() + 365 * 24 * 60 * 60 * 1000,
+                ),
+            });
+
+            console.log('Токен успешно создан и связан с пользователем.');
+        } catch (error) {
+            console.error('Ошибка при создании токена:', error);
+            throw error;
+        }
     }
- */
 }
 
 export default new TokenService();

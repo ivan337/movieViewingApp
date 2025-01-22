@@ -1,6 +1,6 @@
 import type express from 'express';
 
-import UserDto from '../dtos/user-dto';
+import ApiError from '../exception/api-error';
 import userService from '../service/user-service';
 import { AppRequest } from '../types/request';
 
@@ -12,7 +12,7 @@ class UserController {
     ) {
         try {
             await new Promise<void>((res) => {
-                setTimeout(() => res(), 5000);
+                setTimeout(() => res(), 1000);
             });
 
             if (req.abortSignal?.aborted) {
@@ -73,13 +73,7 @@ class UserController {
         next: express.NextFunction,
     ) {
         try {
-            const testUser = new UserDto({
-                email: 'test',
-                id: 1,
-                isActivated: true,
-            });
-
-            return res.json(testUser);
+            return res.json({});
         } catch (e) {
             next(e);
         }
@@ -93,9 +87,26 @@ class UserController {
         try {
             const { refreshToken } = req.cookies;
 
+            if (!refreshToken) {
+                throw ApiError.unauthorizedError();
+            }
+
             const userData = await userService.refresh(refreshToken);
 
-            res.json(userData);
+            if (!userData) {
+                throw ApiError.unauthorizedError();
+            }
+
+            res.cookie('refreshToken', userData.refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
+                httpOnly: true,
+                secure: true,
+                sameSite: 'strict',
+            });
+
+            res.json({
+                accessToken: userData.accessToken,
+            });
         } catch (e) {
             next(e);
         }
