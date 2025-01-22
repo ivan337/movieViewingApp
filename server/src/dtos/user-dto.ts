@@ -1,12 +1,12 @@
 interface IUserDto {
     email: string;
-    id: number;
+    id: string;
     isActivated: boolean;
 }
 
 class UserDto implements IUserDto {
     readonly email: string;
-    readonly id: number;
+    readonly id: string;
     readonly isActivated: boolean;
 
     constructor(model: IUserDto) {

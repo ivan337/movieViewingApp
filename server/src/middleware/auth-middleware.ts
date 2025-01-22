@@ -6,7 +6,7 @@ import { AppRequest } from '../types/request';
 
 declare module 'express' {
     interface Request {
-        user?: CustomJwtPayload;
+        user?: CustomJwtPayload | null;
     }
 }
 
@@ -28,7 +28,7 @@ export default function (
             throw ApiError.unauthorizedError();
         }
 
-        req.user = tokenService.validateAccessToken(token) as CustomJwtPayload;
+        req.user = tokenService.validateAccessToken(token);
 
         if (!req.user) {
             throw ApiError.unauthorizedError();

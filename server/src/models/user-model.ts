@@ -1,61 +1,63 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, IncludeOptions, Model, Optional } from 'sequelize';
 
 import sqliteConnection from '../dbService/sqlite-connection';
 
+import { AuthData } from './index';
+
 interface UserAttributes {
-    id: number;
-    email: string;
-    password: string;
+    id: string;
+    username: string;
+    createdAt: Date;
+    updatedAt: Date;
     isActivated: boolean;
-    activationLink: string;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+interface UserCreationAttributes
+    extends Optional<
+        UserAttributes,
+        'id' | 'createdAt' | 'updatedAt' | 'isActivated'
+    > {}
 
-class UserModel
+class User
     extends Model<UserAttributes, UserCreationAttributes>
     implements UserAttributes
 {
-    public id!: number;
-    public email!: string;
-    public password!: string;
+    public id!: string;
+    public username!: string;
+    public createdAt!: Date;
+    public updatedAt!: Date;
     public isActivated!: boolean;
-    public activationLink!: string;
-
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
 }
 
-UserModel.init(
+User.init(
     {
         id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        email: {
+        username: {
             type: DataTypes.STRING,
+            allowNull: false,
             unique: true,
-            allowNull: false,
         },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        createdAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+        },
+        updatedAt: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
         },
         isActivated: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false,
-        },
-        activationLink: {
-            type: DataTypes.STRING,
+            defaultValue: true,
         },
     },
     {
         sequelize: sqliteConnection,
-        tableName: 'users',
-        timestamps: true,
+        modelName: 'User',
     },
 );
 
-export default UserModel;
+export default User;

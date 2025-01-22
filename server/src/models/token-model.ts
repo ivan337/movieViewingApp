@@ -1,48 +1,57 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { Model, DataTypes, Optional } from 'sequelize';
 
 import sqliteConnection from '../dbService/sqlite-connection';
 
 interface TokenAttributes {
-    id: number;
-    user: number;
-    refreshToken: string;
+    id: string;
+    userId: string;
+    token: string;
+    expiresAt: Date;
+    isRevoked: boolean;
 }
 
-interface TokenCreationAttributes extends Optional<TokenAttributes, 'id'> {}
+interface TokenCreationAttributes
+    extends Optional<TokenAttributes, 'id' | 'isRevoked'> {}
 
-class TokenModel
+class Token
     extends Model<TokenAttributes, TokenCreationAttributes>
     implements TokenAttributes
 {
-    public id!: number;
-    public user!: number;
-    public refreshToken!: string;
-
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    public id!: string;
+    public userId!: string;
+    public token!: string;
+    public expiresAt!: Date;
+    public isRevoked!: boolean;
 }
 
-TokenModel.init(
+Token.init(
     {
         id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        user: {
+        userId: {
             type: DataTypes.UUID,
-        },
-        refreshToken: {
-            type: DataTypes.STRING,
             allowNull: false,
+        },
+        token: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        expiresAt: {
+            type: DataTypes.DATE,
+            allowNull: false,
+        },
+        isRevoked: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
         },
     },
     {
         sequelize: sqliteConnection,
-        tableName: 'tokens',
-        timestamps: true,
+        modelName: 'Token',
     },
 );
 
-export default TokenModel;
+export default Token;

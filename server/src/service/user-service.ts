@@ -3,30 +3,33 @@ import bcrypt from 'bcrypt';
 import UserDto from '../dtos/user-dto';
 import ApiError from '../exception/api-error';
 import apiError from '../exception/api-error';
+import { createUser, findUserByEmail } from '../models';
 import TokenModel from '../models/token-model';
-import UserModel from '../models/user-model';
 
 import tokenService, { CustomJwtPayload } from './token-service';
 
 class UserService {
     async login(email: string, password: string) {
-        const user = await UserModel.findOne({
-            where: {
-                email: email,
-            },
-        });
+        const user = await findUserByEmail(email);
 
         if (!user) {
             throw ApiError.unauthorizedError();
         }
 
-        const passwordEq = await bcrypt.compare(password, user.password);
+        const passwordEq = await bcrypt.compare(
+            password,
+            user.AuthData.passwordHash,
+        );
 
         if (!passwordEq) {
             throw ApiError.badRequest('Неверный пароль');
         }
 
-        const userDto = new UserDto(user);
+        const userDto = new UserDto({
+            email: user.AuthData.email,
+            id: user.id,
+            isActivated: user.isActivated,
+        });
 
         const tokens = tokenService.generateToken({ ...userDto });
 
@@ -38,27 +41,32 @@ class UserService {
         };
     }
     async registration(email: string, password: string) {
-        const user = await UserModel.findOne({
-            where: {
-                email: email,
-            },
-        });
-
-        if (user) {
+        if (await findUserByEmail(email)) {
             throw apiError.badRequest(
                 `Пользователь с почтовым адресом ${email} уже существует`,
             );
         } else {
             const hashPassword = await bcrypt.hash(password, 3);
             const activationLink = 'https://activationlink.com';
-            const user = await UserModel.create({
-                activationLink,
-                email,
-                isActivated: false,
+
+            await createUser({
+                email: email,
                 password: hashPassword,
+                userName: email + ' pepe',
+                roleName: 'user',
             });
 
-            const userDto = new UserDto(user);
+            const user = await findUserByEmail(email);
+
+            if (!user) {
+                throw ApiError.internalError();
+            }
+
+            const userDto = new UserDto({
+                email: user.AuthData.email,
+                id: user.id,
+                isActivated: user.isActivated,
+            });
 
             const tokens = tokenService.generateToken({ ...userDto });
 

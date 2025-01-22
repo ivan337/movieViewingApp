@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
-import TokenModel from '../models/token-model';
+import { createToken, findTokenByUserId } from '../models';
+import { Token } from '../models';
 
 interface UserData {
     email: string;
@@ -35,21 +36,19 @@ class TokenService {
         return { accessToken, refreshToken };
     }
 
-    async saveToken(userId: number, refreshToken: string): Promise<TokenModel> {
-        const tokenData = await TokenModel.findOne({
-            where: {
-                user: userId,
-            },
-        });
+    async saveToken(userId: string, refreshToken: string): Promise<Token> {
+        const tokenData = await findTokenByUserId(userId);
 
         if (!tokenData) {
-            return await TokenModel.create({
-                user: userId,
-                refreshToken: refreshToken,
+            await createToken({
+                userId,
+                token: refreshToken,
             });
+
+            return findTokenByUserId(userId);
         }
 
-        tokenData.set('refreshToken', refreshToken);
+        tokenData.set('token', refreshToken);
 
         return await tokenData.save();
     }
