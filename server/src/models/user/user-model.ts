@@ -1,4 +1,5 @@
 import {
+    BelongsToManyAddAssociationMixin,
     CreationOptional,
     DataTypes,
     InferAttributes,
@@ -8,12 +9,16 @@ import {
 
 import sqliteConnection from '../../dbService/sqlite-connection';
 
+import Role from './role-model';
+
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare id: CreationOptional<string>; // Необязательное поле
     declare userName: string; // Обязательное поле
     declare createdAt: CreationOptional<Date>; // Необязательное поле
     declare updatedAt: CreationOptional<Date>; // Необязательное поле
     declare isActivated: CreationOptional<boolean>; // Необязательное поле
+
+    declare addRole: BelongsToManyAddAssociationMixin<Role, string>;
 }
 
 User.init(

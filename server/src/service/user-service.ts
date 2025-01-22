@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { Transaction } from 'sequelize';
 
 import sqliteConnection from '../dbService/sqlite-connection';
 import UserDto from '../dtos/user-dto';
@@ -175,19 +174,20 @@ class UserService {
                 { transaction },
             );
 
-            const [, created] = await Role.findOrCreate({
+            const [role, created] = await Role.findOrCreate({
                 where: { name: roleName },
                 defaults: { name: roleName },
                 transaction,
             });
 
-            await transaction.commit();
-
             if (created) {
+                await user.addRole(role, { transaction });
                 console.log(`Роль "user" успешно добавлена.`);
             } else {
                 console.log(`Роль "user" уже существует.`);
             }
+
+            await transaction.commit();
         } catch (e) {
             await transaction.rollback();
 

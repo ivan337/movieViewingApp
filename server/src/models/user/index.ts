@@ -2,7 +2,6 @@ import AuthData from './authdata-model';
 import Role from './role-model';
 import Token from './token-model';
 import User from './user-model';
-import UserRole from './userrole-model';
 
 const setupAssociations = () => {
     // Связь User и AuthData (один к одному)
@@ -15,12 +14,12 @@ const setupAssociations = () => {
 
     // Связь User и Role (многие ко многим через UserRole)
     User.belongsToMany(Role, {
-        through: UserRole,
+        through: 'UserRole',
         foreignKey: 'userId',
         onDelete: 'CASCADE',
     });
     Role.belongsToMany(User, {
-        through: UserRole,
+        through: 'UserRole',
         foreignKey: 'roleId',
         onDelete: 'CASCADE',
     });
@@ -30,4 +29,4 @@ const setupAssociations = () => {
     Token.belongsTo(User, { foreignKey: 'userId' });
 };
 
-export { User, AuthData, Role, UserRole, Token, setupAssociations };
+export { User, AuthData, Role, Token, setupAssociations };
