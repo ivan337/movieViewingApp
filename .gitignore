@@ -3,6 +3,8 @@
 # dependencies
 /client/node_modules
 /server/node_modules
+/client/package-lock.json
+/server/package-lock.json
 /client/build
 /server/build
 /.pnp
@@ -25,3 +27,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /package-lock.json
+/.idea
