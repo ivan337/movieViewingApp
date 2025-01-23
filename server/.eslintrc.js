@@ -31,7 +31,12 @@ module.exports = {
   ],
   // Правила ESLint
   rules: {
-    'prettier/prettier': 'error', // Включаем Prettier как ESLint правило
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "lf"
+      }
+    ],
     '@typescript-eslint/explicit-function-return-type': 'off', // Отключаем обязательное указание типов возвращаемых значений
     '@typescript-eslint/no-unused-vars': 'warn', // Предупреждение для неиспользуемых переменных
     'import/order': [
