@@ -1,1 +1,1 @@
-export { default, Ref } from './PepaInput';
+export { default, Ref } from './Input';

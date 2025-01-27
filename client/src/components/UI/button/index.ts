@@ -1,1 +1,1 @@
-export { default } from './PepaButton';
+export { default } from './Button';

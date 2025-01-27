@@ -1,118 +1,26 @@
-import { InputHTMLAttributes, useCallback, useEffect, useState } from 'react';
+import { HTMLAttributes } from 'react';
 
-import { FaLock, FaUser } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import classes from './Login.module.scss';
 
-import PepaButton from '@/components/UI/button/PepaButton';
-import PepaInput from '@/components/UI/input/PepaInput';
-import { selectAuthError, setError, setToken } from '@/features/auth/authSlice';
-import { useLoginMutation } from '@/services/auth';
-import { appendCookie } from '@/utils/cookie';
+import SignIn from '@/components/Login/Tab/SignIn';
+import SignUp from '@/components/Login/Tab/SignUp';
+import { selectAuthError } from '@/features/auth/authSlice';
 
-const Login = (props: InputHTMLAttributes<HTMLDivElement>) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const dispatch = useDispatch();
+const Login = (props: HTMLAttributes<HTMLDivElement>) => {
     const error = useSelector(selectAuthError);
-    const loginMutation = useLoginMutation();
-
-    const onFormSubmit = useCallback(
-        async (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-
-            try {
-                const resp = await loginMutation.mutateAsync({
-                    email,
-                    password,
-                });
-
-                if (resp.accessToken && resp.refreshToken) {
-                    dispatch(
-                        setToken({
-                            accessToken: resp.accessToken,
-                            isAuthenticated: true,
-                            error: '',
-                        }),
-                    );
-
-                    appendCookie('refreshToken', resp.refreshToken, 14, true);
-
-                    sessionStorage.setItem('accessToken', resp.accessToken);
-                }
-            } catch (e) {
-                const errorMessage = e.response?.data?.message || e.message;
-
-                dispatch(setError(errorMessage));
-            }
-        },
-        [email, password, dispatch, loginMutation],
-    );
-
-    useEffect(() => {
-        dispatch(setError(''));
-    }, [email, password, dispatch]);
 
     return (
         <div className={`${classes.login} ${props.className}`}>
             <div className={classes.login__header}>
-                <div className={classes.login_headerImage} />
+                <div className={classes.login__headerImage} />
             </div>
-            <div className={classes.login__main}>
-                <div className={classes.navigator}></div>
-                <form onSubmit={onFormSubmit} className={classes.inputForm}>
-                    <div className={classes.inputBox}>
-                        <PepaInput
-                            className={classes.inputBox_inputText}
-                            required={true}
-                            onChange={(e) => setEmail(e.target.value)}
-                            type={'text'}
-                            placeholder={'Логин'}
-                        />
-                        <FaUser className={classes.inputBox_icon} />
-                    </div>
-
-                    <div className={classes.inputBox}>
-                        <PepaInput
-                            className={classes.inputBox_inputText}
-                            required={true}
-                            onChange={(e) => setPassword(e.target.value)}
-                            type={'password'}
-                            placeholder={'Пароль'}
-                        />
-                        <FaLock className={classes.inputBox_icon} />
-                    </div>
-
-                    <div className={classes.inputForm__checkbox}>
-                        <PepaInput
-                            className={
-                                classes.inputForm__checkbox_checkboxInput
-                            }
-                            type={'checkbox'}
-                        />
-                        <label
-                            className={
-                                classes.inputForm__checkbox_checkboxLabel
-                            }
-                        >
-                            Запомнить логин
-                        </label>
-                    </div>
-                    <div className={classes.inputForm__loginButtonR}>
-                        <PepaButton
-                            className={classes.inputForm__loginButton}
-                            type={'submit'}
-                            disabled={loginMutation.isLoading}
-                        >
-                            {loginMutation.isLoading
-                                ? 'Logging in...'
-                                : 'Login'}
-                        </PepaButton>
-                    </div>
-                    {error && <div>Error: {error}</div>}
-                </form>
+            <div className={classes.login__content}>
+                <div className={classes.login__navigator}></div>
+                <SignIn />
+                <SignUp />
+                {error && <div>Error: {error}</div>}
             </div>
         </div>
     );

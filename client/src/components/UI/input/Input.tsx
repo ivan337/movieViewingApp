@@ -1,16 +1,16 @@
 import { forwardRef, InputHTMLAttributes } from 'react';
 
-import classes from './PepaInput.module.scss';
+import classes from './Input.module.scss';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {}
 
 type Ref = HTMLInputElement;
 
-const PepaInput = forwardRef<Ref, Props>((props, ref) => (
+const Input = forwardRef<Ref, Props>((props, ref) => (
     <input className={classes.input} {...props} ref={ref} />
 ));
 
-PepaInput.displayName = 'Pepe Input field';
+Input.displayName = 'input';
 
-export default PepaInput;
+export default Input;
 export { Ref };
