@@ -2,19 +2,19 @@ import React, { HTMLAttributes } from 'react';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 
-import classes from './LoginPage.module.scss';
+import './LoginPage.scss';
 
 import Login from '@/components/Login';
 import News from '@/components/News';
 
 const queryClient = new QueryClient();
 
-const LoginPage: React.FC<HTMLAttributes<HTMLDivElement>> = (props) => {
+const LoginPage: React.FC<HTMLAttributes<HTMLDivElement>> = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <div className={`${classes.container} ${props.className}`}>
-                <Login className={classes.login} />
-                <News className={classes.news} />
+            <div className="container login_form-background ">
+                <Login className="login" />
+                <News className="news" />
             </div>
         </QueryClientProvider>
     );

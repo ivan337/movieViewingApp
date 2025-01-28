@@ -1,4 +1,4 @@
-import './SignUpForm.scss';
+import './SignForm.scss';
 
 import React, {
     ChangeEvent,
@@ -9,9 +9,10 @@ import React, {
     useState,
 } from 'react';
 
+import { FaLock, FaUser } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 
-import { setError, setToken } from '@/features/auth/authSlice';
+import { setError } from '@/features/auth/authSlice';
 import { useRegistrationMutation } from '@/services/auth';
 
 const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
@@ -45,7 +46,7 @@ const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
                 dispatch(setError(errorMessage));
             }
         },
-        [email, password, dispatch, registrationMutation],
+        [firstName, lastName, email, password, dispatch, registrationMutation],
     );
 
     useEffect(() => {
@@ -53,10 +54,10 @@ const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
     }, [email, password, dispatch]);
 
     return (
-        <form className={`signup__form ${props.className}`} onSubmit={onSubmit}>
-            <div className="signup__input-group">
+        <form className={`sign-form ${props.className}`} onSubmit={onSubmit}>
+            <div className="sign-form__input-group">
                 <input
-                    className="signup__input-text"
+                    className="sign-form__input-text"
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         setFirstName(e.target.value)
                     }
@@ -64,9 +65,9 @@ const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
                 />
             </div>
 
-            <div className="signup__input-group">
+            <div className="sign-form__input-group">
                 <input
-                    className="signup__input-text"
+                    className="sign-form__input-text"
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         setLastName(e.target.value)
                     }
@@ -74,9 +75,9 @@ const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
                 />
             </div>
 
-            <div className="signup__input-group">
+            <div className="sign-form__input-group  sign-form__input-group--center">
                 <input
-                    className="signup__input-text"
+                    className="sign-form__input-text"
                     type="email"
                     required={true}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -84,11 +85,13 @@ const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
                     }
                     placeholder="Email address"
                 />
+
+                <FaUser className="sign-form__icon" />
             </div>
 
-            <div className="signup__input-group">
+            <div className="sign-form__input-group  sign-form__input-group--center">
                 <input
-                    className="signup__input-text"
+                    className="sign-form__input-text"
                     type="password"
                     required={true}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -96,10 +99,12 @@ const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
                     }
                     placeholder="Password"
                 />
+
+                <FaLock className="sign-form__icon" />
             </div>
 
             <button
-                className="signup__submit-button"
+                className="sign-form__submit-button"
                 type="submit"
                 disabled={registrationMutation.isLoading}
             >

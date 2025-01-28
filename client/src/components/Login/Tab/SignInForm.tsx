@@ -1,4 +1,4 @@
-import './SignInForm.scss';
+import './SignForm.scss';
 
 import {
     ChangeEvent,
@@ -62,10 +62,10 @@ const SignInForm = (props: HTMLAttributes<HTMLFormElement>) => {
     }, [email, password, dispatch]);
 
     return (
-        <form className={`signin__form ${props.className}`} onSubmit={onSubmit}>
-            <div className="signin__input-group signin__input-group--center">
+        <form className={`sign-form ${props.className}`} onSubmit={onSubmit}>
+            <div className="sign-form__input-group sign-form__input-group--center">
                 <Input
-                    className="signin__input-text"
+                    className="sign-form__input-text"
                     required={true}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         setEmail(e.target.value)
@@ -73,12 +73,12 @@ const SignInForm = (props: HTMLAttributes<HTMLFormElement>) => {
                     type="email"
                     placeholder="Email address"
                 />
-                <FaUser className="signin__icon" />
+                <FaUser className="sign-form__icon" />
             </div>
 
-            <div className="signin__input-group signin__input-group--center">
+            <div className="sign-form__input-group sign-form__input-group--center">
                 <Input
-                    className="signin__input-text"
+                    className="sign-form__input-text"
                     required={true}
                     onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         setPassword(e.target.value)
@@ -86,22 +86,26 @@ const SignInForm = (props: HTMLAttributes<HTMLFormElement>) => {
                     type={'password'}
                     placeholder="Password"
                 />
-                <FaLock className="signin__icon" />
+                <FaLock className="sign-form__icon" />
             </div>
 
-            <div className="signin__input-group">
+            <div className="sign-form__input-group">
                 <Input
-                    className="signin__input-checkbox"
+                    className="sign-form__input-checkbox"
                     type="checkbox"
-                    onChange={(e: ChangeEvent<HTMLInputElement>) => {}}
+                    id="signinInputCheckbox"
+                    onChange={() => {}}
                 />
-                <label className="signin__input-checkbox-label">
+                <label
+                    htmlFor="signinInputCheckbox"
+                    className="sign-form__input-checkbox-label"
+                >
                     Запомнить логин
                 </label>
             </div>
 
             <Button
-                className="signin__submit-button"
+                className="sign-form__submit-button"
                 type="submit"
                 disabled={loginMutation.isLoading}
             >

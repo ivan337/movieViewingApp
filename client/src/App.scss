@@ -1,9 +1,16 @@
 .App {
     margin: 0;
     padding: 0;
+
+    height: 100vh;
+    min-height: 600px;
+    min-width: 800px;
 }
 
-.login_form-background {
-    background: url('@assets/images/background.jpg') no-repeat center;
-    background-size: 100% 100%;
+.hidden {
+    display: none;
+}
+
+.link {
+    cursor: pointer;
 }

@@ -1,25 +1,26 @@
-.signin__form {
+.sign-form {
     display: flex;
     flex-direction: column;
-    height: 190px;
-    margin: 22px 4px 4px 4px;
+    width: 100%;
 }
 
-.signin__input-group {
-    width: 240px;
+.sign-form__input-group {
     display: flex;
+
+    position: relative;
+
+    margin: 4px;
 }
 
-.signin__input-group--center {
+.sign-form__input-group--center {
     justify-content: center;
     align-items: center;
 }
 
-.signin__input-text {
+.sign-form__input-text {
     flex: 1;
     padding-left: 8px;
     padding-right: 30px;
-    margin: 4px;
     height: 36px;
 
     outline: none;
@@ -27,25 +28,25 @@
     border-radius: 16px;
 }
 
-.signin__icon {
+.sign-form__icon {
     position: absolute;
-    transform: translateX(94px);
+    right: 14px;
     font-size: 14px;
     color: black;
 }
 
-.signin__input-checkbox-label {
+.sign-form__input-checkbox-label {
 
 }
 
-.signin__input-checkbox {
+.sign-form__input-checkbox {
     cursor: pointer;
 }
 
-.signin__submit-button {
+.sign-form__submit-button {
     outline: none;
     font-size: 14px;
-    margin: 12px 0 0 0;
+    margin-top: 4px;
     height: 36px;
     border: 2px solid rgba(255, 255, 255, .30);
     border-radius: 16px;
@@ -54,6 +55,6 @@
     cursor: pointer;
 }
 
-.signin__submit-button:hover {
+.sign-form__submit-button:hover {
     border: 2px solid rgba(255, 255, 255, .60);
 }

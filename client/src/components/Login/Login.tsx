@@ -17,23 +17,24 @@ const Login = (props: HTMLAttributes<HTMLDivElement>) => {
             <div className="login__header">
                 <div className="login__logo" />
             </div>
+            <ul className="login__navigator">
+                <li
+                    className={`login__navigator-item ${activeTab === 'signin' ? 'login__navigator-item--active' : ''}`}
+                    onClick={() => setActiveTab('signin')}
+                >
+                    <a className="link">Sign In</a>
+                </li>
+                <li
+                    className={`login__navigator-item ${activeTab === 'signup' ? 'login__navigator-item--active' : ''}`}
+                    onClick={() => setActiveTab('signup')}
+                >
+                    <a className="link">Sign Up</a>
+                </li>
+            </ul>
             <div className="login__content">
-                <ul className="login__navigator">
-                    <li
-                        className={`login__navigator-item ${activeTab === 'signin' ? 'login__navigator-item--active' : ''}`}
-                        onClick={() => setActiveTab('signin')}
-                    >
-                        <a href="#signin">Sign In</a>
-                    </li>
-                    <li
-                        className={`login__navigator-item ${activeTab === 'signup' ? 'login__navigator-item--active' : ''}`}
-                        onClick={() => setActiveTab('signup')}
-                    >
-                        <a href="#signup">Sign Up</a>
-                    </li>
-                </ul>
                 {activeTab === 'signin' ? <SignInForm /> : <SignUpForm />}
-
+            </div>
+            <div className="login__footer">
                 {error && <div className="login__error">Error: {error}</div>}
             </div>
         </div>
