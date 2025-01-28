@@ -12,11 +12,12 @@ import sqliteConnection from '../../dbService/sqlite-connection';
 import Role from './role-model';
 
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-    declare id: CreationOptional<string>; // Необязательное поле
-    declare userName: string; // Обязательное поле
-    declare createdAt: CreationOptional<Date>; // Необязательное поле
-    declare updatedAt: CreationOptional<Date>; // Необязательное поле
-    declare isActivated: CreationOptional<boolean>; // Необязательное поле
+    declare id: CreationOptional<string>;
+    declare email: string;
+    declare passwordHash: string;
+    declare createdAt: CreationOptional<Date>;
+    declare updatedAt: CreationOptional<Date>;
+    declare isActivated: CreationOptional<boolean>;
 
     declare addRole: BelongsToManyAddAssociationMixin<Role, string>;
 }
@@ -28,10 +29,14 @@ User.init(
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
-        userName: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
+        },
+        passwordHash: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         createdAt: {
             type: DataTypes.DATE,

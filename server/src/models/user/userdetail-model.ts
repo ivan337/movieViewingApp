@@ -1,25 +1,26 @@
 import {
-    Model,
+    CreationOptional,
     DataTypes,
     InferAttributes,
     InferCreationAttributes,
-    CreationOptional,
+    Model,
 } from 'sequelize';
 
 import sqliteConnection from '../../dbService/sqlite-connection';
 
-class AuthData extends Model<
-    InferAttributes<AuthData>,
-    InferCreationAttributes<AuthData>
+class UserDetail extends Model<
+    InferAttributes<UserDetail>,
+    InferCreationAttributes<UserDetail>
 > {
     declare id: CreationOptional<string>;
-    declare userId: CreationOptional<string>;
-    declare email: string;
-    declare passwordHash: string;
-    declare lastLogin: CreationOptional<Date>;
+    declare userId: string;
+    declare firstName: string;
+    declare lastName: string;
+    declare bio: CreationOptional<string>;
+    declare avatarUrl: CreationOptional<string>;
 }
 
-AuthData.init(
+UserDetail.init(
     {
         id: {
             type: DataTypes.UUID,
@@ -30,23 +31,27 @@ AuthData.init(
             type: DataTypes.UUID,
             allowNull: false,
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        passwordHash: {
+        firstName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        lastLogin: {
-            type: DataTypes.DATE,
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        bio: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        avatarUrl: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
     },
     {
         sequelize: sqliteConnection,
-        modelName: 'AuthData',
+        modelName: 'UserDetail',
     },
 );
 
-export default AuthData;
+export default UserDetail;

@@ -3,6 +3,8 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Token } from '../models/user';
 import User from '../models/user/user-model';
 
+import userService from './user-service';
+
 interface UserData {
     email: string;
     id: number;
@@ -94,13 +96,6 @@ class TokenService {
     findTokenByUserId(userId: string): Promise<Token | null> {
         return Token.findOne({
             where: { userId },
-            include: [
-                {
-                    model: User,
-                    as: 'User',
-                    required: true,
-                },
-            ],
         });
     }
 
@@ -112,7 +107,7 @@ class TokenService {
         token: string;
     }): Promise<void> {
         try {
-            const user = await User.findByPk(userId);
+            const user = await userService.findUserById(userId);
 
             if (!user) {
                 throw new Error('Пользователь не найден');

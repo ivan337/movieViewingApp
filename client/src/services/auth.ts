@@ -15,6 +15,11 @@ interface ILoginRequest {
     password: string;
 }
 
+interface IRegisterRequest extends ILoginRequest {
+    firstName?: string;
+    lastName?: string;
+}
+
 const prepareHeaders = () => {
     const headers = {
         'Content-Type': 'application/json',
@@ -50,7 +55,7 @@ const refreshAccessToken = async (): Promise<ILoginResponse> => {
 };
 
 const registration = async (
-    credentials: ILoginRequest,
+    credentials: IRegisterRequest,
 ): Promise<ILoginResponse> => {
     const response = await axios.post(`${baseUrl}/registration`, credentials, {
         headers: prepareHeaders(),

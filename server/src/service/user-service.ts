@@ -4,13 +4,13 @@ import sqliteConnection from '../dbService/sqlite-connection';
 import UserDto from '../dtos/user-dto';
 import ApiError from '../exception/api-error';
 import apiError from '../exception/api-error';
-import { AuthData, Role, User } from '../models/user';
+import { Role, User, UserDetail } from '../models/user';
 
 import tokenService, { CustomJwtPayload } from './token-service';
 import userService from './user-service';
 
-export type UserWithAuthData = User & {
-    AuthData: AuthData;
+export type UserWithUserDetail = User & {
+    UserDetail: UserDetail;
 };
 
 class UserService {
@@ -21,17 +21,14 @@ class UserService {
             throw ApiError.unauthorizedError();
         }
 
-        const passwordEq = await bcrypt.compare(
-            password,
-            user.AuthData.passwordHash,
-        );
+        const passwordEq = await bcrypt.compare(password, user.passwordHash);
 
         if (!passwordEq) {
             throw ApiError.badRequest('Неверный пароль');
         }
 
         const userDto = new UserDto({
-            email: user.AuthData.email,
+            email: user.email,
             id: user.id,
             isActivated: user.isActivated,
         });
@@ -45,7 +42,12 @@ class UserService {
             userDto,
         };
     }
-    async registration(email: string, password: string) {
+    async registration(
+        email: string,
+        password: string,
+        firstName: string,
+        lastName: string,
+    ) {
         if (await userService.findUserByEmail(email)) {
             throw apiError.badRequest(
                 `Пользователь с почтовым адресом ${email} уже существует`,
@@ -57,7 +59,8 @@ class UserService {
             await userService.createUser({
                 email: email,
                 password: hashPassword,
-                userName: email + ' pepe',
+                firstName: firstName,
+                lastName: lastName,
                 roleName: 'user',
             });
 
@@ -68,7 +71,7 @@ class UserService {
             }
 
             const userDto = new UserDto({
-                email: user.AuthData.email,
+                email: user.email,
                 id: user.id,
                 isActivated: user.isActivated,
             });
@@ -110,7 +113,7 @@ class UserService {
         }
 
         const userDto = new UserDto({
-            email: user.AuthData.email,
+            email: user.email,
             id: user.id,
             isActivated: user.isActivated,
         });
@@ -125,13 +128,15 @@ class UserService {
         };
     }
 
-    async findUserByEmail(email: string): Promise<UserWithAuthData | null> {
+    async findUserByEmail(email: string): Promise<UserWithUserDetail | null> {
         const user = await User.findOne({
+            where: {
+                email,
+            },
             include: [
                 {
-                    model: AuthData,
-                    as: 'AuthData',
-                    where: { email },
+                    model: UserDetail,
+                    as: 'UserDetail',
                     required: true,
                 },
             ],
@@ -141,35 +146,54 @@ class UserService {
             return null;
         }
 
-        return user as UserWithAuthData;
+        return user as UserWithUserDetail;
+    }
+
+    async findUserById(id: string): Promise<User | null> {
+        const user = await User.findOne({
+            where: {
+                id,
+            },
+        });
+
+        if (!user) {
+            return null;
+        }
+
+        return user;
     }
 
     async createUser({
-        userName,
         email,
+        firstName,
+        lastName,
         password,
         roleName,
     }: {
-        userName: string;
         email: string;
         password: string;
         roleName: string;
+        firstName: string;
+        lastName: string;
     }) {
         const transaction = await sqliteConnection.transaction();
 
         try {
             const user = await User.create(
                 {
-                    userName,
+                    email,
+                    passwordHash: password,
                 },
                 { transaction },
             );
 
-            await AuthData.create(
+            await UserDetail.create(
                 {
                     userId: user.id,
-                    email: email,
-                    passwordHash: password,
+                    firstName: firstName,
+                    lastName: lastName,
+                    bio: '',
+                    avatarUrl: '',
                 },
                 { transaction },
             );

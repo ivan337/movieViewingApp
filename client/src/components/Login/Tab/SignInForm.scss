@@ -1,51 +1,21 @@
-.login {
-    height: 400px;
-    width: 370px;
-
-    min-height: 400px;
-    min-width: 370px;
-}
-
-.login__content {
+.signin__form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    flex: 1;
-}
-
-.login__header {
-    height: 93px;
-    width: 372px;
-}
-.login__headerImage {
-    content: '';
-    height: 100%;
-    width: 100%;
-
-    -webkit-border-top-left-radius: 10px;
-    -webkit-border-top-right-radius: 10px;
-}
-
-.login__navigator {
-    background-color: rgba(106, 55, 134, .30);
-    height: 47px;
-    width: 370px;
-}
-
-.login__form {
-    display: flex;
-    flex-direction: column;
+    height: 190px;
     margin: 22px 4px 4px 4px;
 }
 
-.login__inputBox {
+.signin__input-group {
     width: 240px;
     display: flex;
+}
+
+.signin__input-group--center {
     justify-content: center;
     align-items: center;
 }
 
-.login__inputText {
+.signin__input-text {
     flex: 1;
     padding-left: 8px;
     padding-right: 30px;
@@ -57,27 +27,22 @@
     border-radius: 16px;
 }
 
-.login__icon {
+.signin__icon {
     position: absolute;
     transform: translateX(94px);
     font-size: 14px;
     color: black;
 }
 
-.login__checkbox {
-    display: flex;
-    margin: 4px 0 0 0;
-}
-
-.login__inputCheckbox_label {
+.signin__input-checkbox-label {
 
 }
 
-.login__inputCheckbox {
+.signin__input-checkbox {
     cursor: pointer;
 }
 
-.login__submitButton {
+.signin__submit-button {
     outline: none;
     font-size: 14px;
     margin: 12px 0 0 0;
@@ -89,6 +54,6 @@
     cursor: pointer;
 }
 
-.login__submitButton:hover {
+.signin__submit-button:hover {
     border: 2px solid rgba(255, 255, 255, .60);
 }
