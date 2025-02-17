@@ -45,7 +45,7 @@ const initMiddleware = () => {
     app.use('/api', router);
     app.use(errorMiddleware);
 
-    const ROOT_PATH = path.resolve(__dirname, '..');
+    const ROOT_PATH = path.resolve(__dirname, '../..');
     app.use(express.static(path.join(ROOT_PATH, 'public')));
 
     app.get('*', (req, res) => {

@@ -1,11 +1,4 @@
-.App {
-    margin: 0;
-    padding: 0;
-
-    height: 100vh;
-    min-height: 600px;
-    min-width: 800px;
-}
+@use './styles/_variables.scss';
 
 .hidden {
     display: none;

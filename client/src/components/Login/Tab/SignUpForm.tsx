@@ -12,8 +12,8 @@ import React, {
 import { FaLock, FaUser } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 
+import { useRegistrationMutation } from '@/features/auth/authApi';
 import { setError } from '@/features/auth/authSlice';
-import { useRegistrationMutation } from '@/services/auth';
 
 const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
     const [email, setEmail] = useState('');

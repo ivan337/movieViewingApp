@@ -29,5 +29,13 @@ export function buildLoaders({ mode }: BuildOptions): ModuleOptions['rules'] {
         exclude: /node_modules/,
     };
 
-    return [scssLoader, tsLoader];
+    const assetLoader = {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset/resource',
+        generator: {
+            filename: 'images/[name].[hash][ext]',
+        },
+    };
+
+    return [assetLoader, scssLoader, tsLoader];
 }

@@ -5,25 +5,25 @@ import { Configuration } from 'webpack';
 import { BuildOptions } from './types/types';
 
 export function buildPlugins({
-  paths,
-  mode,
+    paths,
+    mode,
 }: BuildOptions): Configuration['plugins'] {
-  const isProd = mode === 'production';
+    const isProd = mode === 'production';
 
-  const plugins: Configuration['plugins'] = [
-    new HtmlWebpackPlugin({
-      template: paths.html,
-    }),
-  ];
+    const plugins: Configuration['plugins'] = [
+        new HtmlWebpackPlugin({
+            template: paths.html,
+        }),
+    ];
 
-  if (isProd) {
-    plugins.push(
-      new MiniCssExtractPlugin({
-        filename: 'css/[name].[contenthash:8].css',
-        chunkFilename: 'css/[name].[contenthash:8].css',
-      }),
-    );
-  }
+    if (isProd) {
+        plugins.push(
+            new MiniCssExtractPlugin({
+                filename: 'css/[name].[contenthash:8].css',
+                chunkFilename: 'css/[name].[contenthash:8].css',
+            }),
+        );
+    }
 
-  return plugins;
+    return plugins;
 }

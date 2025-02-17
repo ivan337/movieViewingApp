@@ -20,26 +20,26 @@ interface IRegisterRequest extends ILoginRequest {
     lastName?: string;
 }
 
-const prepareHeaders = () => {
-    const headers = {
+const authApi = axios.create({
+    baseURL: 'http://localhost:5000/api/user',
+    headers: {
         'Content-Type': 'application/json',
-        Authorization: '',
-        'idempotency-key': v4(),
-    };
+    },
+});
 
+authApi.interceptors.request.use((config) => {
     const accessToken = sessionStorage.getItem('accessToken');
 
     if (accessToken) {
-        headers['Authorization'] = `Bearer ${accessToken}`;
+        config.headers.Authorization = `Bearer ${accessToken}`;
     }
+    config.headers['idempotency-key'] = v4();
 
-    return headers;
-};
+    return config;
+});
 
 const login = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
-    const response = await axios.post(`${baseUrl}/login`, credentials, {
-        headers: prepareHeaders(),
-    });
+    const response = await axios.post(`${baseUrl}/login`, credentials);
     return response.data;
 };
 
@@ -57,20 +57,12 @@ const refreshAccessToken = async (): Promise<ILoginResponse> => {
 const registration = async (
     credentials: IRegisterRequest,
 ): Promise<ILoginResponse> => {
-    const response = await axios.post(`${baseUrl}/registration`, credentials, {
-        headers: prepareHeaders(),
-    });
+    const response = await axios.post(`${baseUrl}/registration`, credentials);
     return response.data;
 };
 
 const logout = async (): Promise<void> => {
-    await axios.post(
-        `${baseUrl}/logout`,
-        {},
-        {
-            headers: prepareHeaders(),
-        },
-    );
+    await axios.post(`${baseUrl}/logout`);
 };
 
 export const useLoginMutation = () => useMutation(login);

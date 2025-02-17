@@ -1,18 +1,9 @@
 import './App.scss';
-import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
 
-import coreRouter from '@/routes';
-import store from '@/store/store';
+import RootProvider from '@/provider';
 
 function App() {
-    return (
-        <div className="App">
-            <Provider store={store}>
-                <RouterProvider router={coreRouter} />
-            </Provider>
-        </div>
-    );
+    return <RootProvider />;
 }
 
 export default App;

@@ -1,6 +1,18 @@
 import { InputHTMLAttributes } from 'react';
 
-import classes from './News.module.scss';
+import { styled } from 'styled-components';
+
+const NewsContainer = styled.div`
+    height: 380px;
+    width: 500px;
+    min-height: 400px;
+    min-width: 700px;
+    border-radius: 10px;
+    margin-left: 20px;
+    color: #fff;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 1px 4px 0 rgba(255, 255, 255, 0.4);
+`;
 
 const News = (props: InputHTMLAttributes<HTMLDivElement>) => {
     const news = [
@@ -16,9 +28,9 @@ const News = (props: InputHTMLAttributes<HTMLDivElement>) => {
     ));
 
     return (
-        <div className={`${classes.news} ${props.className}`}>
-            <ul>{listItems}</ul>
-        </div>
+        <NewsContainer {...props} className={props.className}>
+            {listItems}
+        </NewsContainer>
     );
 };
 

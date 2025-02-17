@@ -1,11 +1,17 @@
-import { Link } from 'react-router-dom';
+import { useTheme } from '@/provider/ThemeProvider';
 
 const HomePage = () => {
+    const { toggleTheme } = useTheme();
+
     return (
         <div>
-            <div>Home</div>
-            <Link to="/login">login! </Link>
-            <Link to="/logout">logout! </Link>
+            Home
+            <button
+                className="login__header-button"
+                onClick={() => toggleTheme()}
+            >
+                test
+            </button>
         </div>
     );
 };
