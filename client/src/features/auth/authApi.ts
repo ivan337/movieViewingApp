@@ -28,7 +28,7 @@ const authApi = axios.create({
 });
 
 authApi.interceptors.request.use((config) => {
-    const accessToken = sessionStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessToken');
 
     if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
@@ -39,12 +39,12 @@ authApi.interceptors.request.use((config) => {
 });
 
 const login = async (credentials: ILoginRequest): Promise<ILoginResponse> => {
-    const response = await axios.post(`${baseUrl}/login`, credentials);
+    const response = await authApi.post(`${baseUrl}/login`, credentials);
     return response.data;
 };
 
 const refreshAccessToken = async (): Promise<ILoginResponse> => {
-    const response = await axios.post(
+    const response = await authApi.post(
         `${baseUrl}/refresh-token`,
         {},
         {
@@ -57,13 +57,16 @@ const refreshAccessToken = async (): Promise<ILoginResponse> => {
 const registration = async (
     credentials: IRegisterRequest,
 ): Promise<ILoginResponse> => {
-    const response = await axios.post(`${baseUrl}/registration`, credentials);
+    const response = await authApi.post(`${baseUrl}/registration`, credentials);
     return response.data;
 };
 
 const logout = async (): Promise<void> => {
-    await axios.post(`${baseUrl}/logout`);
+    await authApi.post(`${baseUrl}/logout`);
 };
+
+export const checkAuth = async (): Promise<void> =>
+    await authApi.get(`${baseUrl}/check-auth`);
 
 export const useLoginMutation = () => useMutation(login);
 

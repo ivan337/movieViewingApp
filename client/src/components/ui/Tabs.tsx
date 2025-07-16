@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 
 import { DefaultTheme, styled } from 'styled-components';
@@ -12,10 +13,10 @@ const TabList = styled.div`
     border-bottom: 2px solid #ffffff;
 `;
 
-const TabButton = styled.button<DefaultTheme & { isactive: 1 | 0 }>`
+const TabButton = styled.button<DefaultTheme & { $isactive: boolean }>`
     padding: 12px 24px;
     font-size: 14px;
-    color: ${({ isactive }) => (isactive === 1 ? '#ed8f17fa' : '#ffffff')};
+    color: ${({ $isactive }) => ($isactive ? '#ed8f17fa' : '#ffffff')};
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -45,21 +46,22 @@ const Tab = ({
     activeTab: string;
     setActiveTab: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-    const isActive = id === activeTab ? 1 : 0;
     return (
-        <TabButton isactive={isActive} onClick={() => setActiveTab(id)}>
+        <TabButton
+            $isactive={id === activeTab}
+            onClick={() => setActiveTab(id)}
+        >
             {label}
         </TabButton>
     );
 };
 
-const Tabs = ({
-    tabs,
-    initialTab,
-}: {
+interface ITabs {
     tabs: Array<{ id: string; label: string; content: React.ReactNode }>;
     initialTab: string;
-}) => {
+}
+
+const Tabs: React.FC<ITabs> = ({ tabs, initialTab }) => {
     const [activeTab, setActiveTab] = useState(initialTab);
 
     return (

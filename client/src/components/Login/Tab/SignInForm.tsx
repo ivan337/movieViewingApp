@@ -11,10 +11,18 @@ import {
 
 import { FaLock, FaUser } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
+import { styled } from 'styled-components';
 
+import Checkbox from '@/components/ui/Checkbox';
+import Input from '@/components/ui/Input';
 import { useLoginMutation } from '@/features/auth/authApi';
 import { setError, setToken } from '@/features/auth/authSlice';
 import { appendCookie } from '@/utils/cookie';
+
+const RoundedInput = styled(Input)`
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 16px;
+`;
 
 const SignInForm = (props: HTMLAttributes<HTMLFormElement>) => {
     const [email, setEmail] = useState('');
@@ -61,46 +69,32 @@ const SignInForm = (props: HTMLAttributes<HTMLFormElement>) => {
 
     return (
         <form className={`sign-form ${props.className}`} onSubmit={onSubmit}>
-            <div className="sign-form__input-group sign-form__input-group--center">
-                <input
-                    className="sign-form__input-text"
-                    required={true}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setEmail(e.target.value)
-                    }
-                    type="email"
-                    placeholder="Email address"
-                />
-                <FaUser className="sign-form__icon" />
-            </div>
+            <RoundedInput
+                required={true}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    setEmail(e.currentTarget.value);
+                }}
+                type={'email'}
+                placeholder={'Email address'}
+                icon={<FaUser />}
+            />
 
-            <div className="sign-form__input-group sign-form__input-group--center">
-                <input
-                    className="sign-form__input-text"
-                    required={true}
-                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setPassword(e.target.value)
-                    }
-                    type={'password'}
-                    placeholder="Password"
-                />
-                <FaLock className="sign-form__icon" />
-            </div>
+            <RoundedInput
+                required={true}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    setPassword(e.target.value);
+                }}
+                type={'password'}
+                placeholder={'Password'}
+                icon={<FaLock />}
+            />
 
-            <div className="sign-form__input-group">
-                <input
-                    className="sign-form__input-checkbox"
-                    type="checkbox"
-                    id="signinInputCheckbox"
-                    onChange={() => {}}
-                />
-                <label
-                    htmlFor="signinInputCheckbox"
-                    className="sign-form__input-checkbox-label"
-                >
-                    Запомнить логин
-                </label>
-            </div>
+            <Checkbox
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    console.warn('тык', e.target.checked);
+                }}
+                label={'Запомнить логин'}
+            />
 
             <button
                 className="sign-form__submit-button"
