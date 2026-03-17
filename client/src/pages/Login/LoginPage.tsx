@@ -1,13 +1,10 @@
 import React, { HTMLAttributes } from 'react';
 
 import loginPageBackground from '@assets/images/background.jpg';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { styled } from 'styled-components';
 
 import Login from '@/components/Login/Login';
 import News from '@/components/News/News';
-
-const queryClient = new QueryClient();
 
 const LoginPageContainer = styled.div`
     display: flex;
@@ -21,12 +18,10 @@ const LoginPageContainer = styled.div`
 
 const LoginPage: React.FC<HTMLAttributes<HTMLDivElement>> = () => {
     return (
-        <QueryClientProvider client={queryClient}>
-            <LoginPageContainer>
-                <Login />
-                <News hidden />
-            </LoginPageContainer>
-        </QueryClientProvider>
+        <LoginPageContainer>
+            <Login />
+            <News hidden />
+        </LoginPageContainer>
     );
 };
 

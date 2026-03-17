@@ -5,19 +5,17 @@ import {
     FormEvent,
     HTMLAttributes,
     useCallback,
-    useEffect,
     useState,
 } from 'react';
 
 import { FaLock, FaUser } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { styled } from 'styled-components';
 
 import Checkbox from '@/components/ui/Checkbox';
 import Input from '@/components/ui/Input';
-import { useLoginMutation } from '@/features/auth/authApi';
-import { setError, setToken } from '@/features/auth/authSlice';
-import { appendCookie } from '@/utils/cookie';
+import { useAuth } from '@/hooks/useAuth';
 
 const RoundedInput = styled(Input)`
     border: 2px solid rgba(255, 255, 255, 0.3);
@@ -27,45 +25,24 @@ const RoundedInput = styled(Input)`
 const SignInForm = (props: HTMLAttributes<HTMLFormElement>) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const loginMutation = useLoginMutation();
+    const { login } = useAuth();
 
     const onSubmit = useCallback(
         async (e: FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-
-            try {
-                const resp = await loginMutation.mutateAsync({
-                    email,
-                    password,
-                });
-
-                if (resp.accessToken && resp.refreshToken) {
-                    dispatch(
-                        setToken({
-                            accessToken: resp.accessToken,
-                            isAuthenticated: true,
-                            error: '',
-                        }),
-                    );
-
-                    appendCookie('refreshToken', resp.refreshToken, 14, true);
-
-                    localStorage.setItem('accessToken', resp.accessToken);
-                }
-            } catch (e) {
-                const errorMessage = e.response?.data?.message || e.message;
-
-                dispatch(setError(errorMessage));
-            }
+            login.mutate(
+                { email, password },
+                {
+                    onSuccess: () => {
+                        navigate('/home');
+                    },
+                },
+            );
         },
-        [email, password, dispatch, loginMutation],
+        [email, password, dispatch],
     );
-
-    useEffect(() => {
-        dispatch(setError(''));
-    }, [email, password, dispatch]);
 
     return (
         <form className={`sign-form ${props.className}`} onSubmit={onSubmit}>
@@ -78,7 +55,6 @@ const SignInForm = (props: HTMLAttributes<HTMLFormElement>) => {
                 placeholder={'Email address'}
                 icon={<FaUser />}
             />
-
             <RoundedInput
                 required={true}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -88,21 +64,20 @@ const SignInForm = (props: HTMLAttributes<HTMLFormElement>) => {
                 placeholder={'Password'}
                 icon={<FaLock />}
             />
-
             <Checkbox
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                     console.warn('тык', e.target.checked);
                 }}
                 label={'Запомнить логин'}
             />
-
             <button
                 className="sign-form__submit-button"
                 type="submit"
-                disabled={loginMutation.isLoading}
+                disabled={login.isPending}
             >
-                {loginMutation.isLoading ? 'Logging in...' : 'Login'}
+                {login.isPending ? 'Logging in...' : 'Login'}
             </button>
+            <div>{login.error?.message}</div>
         </form>
     );
 };

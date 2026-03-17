@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-import { DefaultTheme, styled } from 'styled-components';
+import { styled } from 'styled-components';
 
 const TabsContainer = styled.div`
     display: flex;
@@ -13,7 +13,7 @@ const TabList = styled.div`
     border-bottom: 2px solid #ffffff;
 `;
 
-const TabButton = styled.button<DefaultTheme & { $isactive: boolean }>`
+const TabButton = styled.button<{ $isactive: boolean }>`
     padding: 12px 24px;
     font-size: 14px;
     color: ${({ $isactive }) => ($isactive ? '#ed8f17fa' : '#ffffff')};

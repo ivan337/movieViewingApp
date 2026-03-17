@@ -5,53 +5,39 @@ import React, {
     FormEvent,
     HTMLAttributes,
     useCallback,
-    useEffect,
     useState,
 } from 'react';
 
 import { FaLock, FaUser } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
-import { useRegistrationMutation } from '@/features/auth/authApi';
-import { setError } from '@/features/auth/authSlice';
+import { useAuth } from '@/hooks/useAuth';
 
 const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const registrationMutation = useRegistrationMutation();
+    const { registration } = useAuth();
 
     const onSubmit = useCallback(
         async (e: FormEvent<HTMLFormElement>) => {
             e.preventDefault();
 
-            try {
-                const resp = await registrationMutation.mutateAsync({
-                    email,
-                    password,
-                    firstName,
-                    lastName,
-                });
-
-                if (resp.accessToken && resp.refreshToken) {
-                    console.warn('success');
-                }
-            } catch (e) {
-                const errorMessage = e.response?.data?.message || e.message;
-
-                dispatch(setError(errorMessage));
-            }
+            registration.mutate(
+                { firstName, lastName, email, password },
+                {
+                    onSuccess: () => {
+                        navigate('/home');
+                    },
+                },
+            );
         },
-        [firstName, lastName, email, password, dispatch, registrationMutation],
+        [firstName, lastName, email, password, dispatch],
     );
-
-    useEffect(() => {
-        dispatch(setError(''));
-    }, [email, password, dispatch]);
 
     return (
         <form className={`sign-form ${props.className}`} onSubmit={onSubmit}>
@@ -106,11 +92,9 @@ const SignUpForm = (props: HTMLAttributes<HTMLFormElement>) => {
             <button
                 className="sign-form__submit-button"
                 type="submit"
-                disabled={registrationMutation.isLoading}
+                disabled={registration.isPending}
             >
-                {registrationMutation.isLoading
-                    ? 'Registration...'
-                    : 'Registration'}
+                {registration.isPending ? 'Registration...' : 'Registration'}
             </button>
         </form>
     );

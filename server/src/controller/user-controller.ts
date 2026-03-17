@@ -23,6 +23,15 @@ class UserController {
 
             const userData = await userService.login(email, password);
 
+            res.cookie('refreshToken', userData.refreshToken, {
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
+                httpOnly: true,
+                secure: true,
+                sameSite: 'strict',
+            });
+
+            userData.refreshToken = '';
+
             return res.json(userData);
         } catch (e) {
             next(e);
@@ -45,9 +54,13 @@ class UserController {
             );
 
             res.cookie('refreshToken', userData.refreshToken, {
-                maxAge: 30 * 24 * 60 * 60 * 1000,
+                maxAge: 30 * 24 * 60 * 60 * 1000, // 30 дней
                 httpOnly: true,
+                secure: true,
+                sameSite: 'strict',
             });
+
+            userData.refreshToken = '';
 
             return res.json(userData);
         } catch (e) {
